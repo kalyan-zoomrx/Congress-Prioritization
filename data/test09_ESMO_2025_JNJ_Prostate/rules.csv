@@ -1,0 +1,13 @@
+﻿Priority,Rule
+High Priority (modalities and MOAs),"All ADCs in prostate cancer, but especially B7H3, HER-2, HER-3, and TROP2; Radioligands (RLT), CD28, KLK2, CD3, STEAP1, STEAP2, Novel PARPs, PSMA, EZH2, PRC2, AR PROTAC"
+High Priority (Names of Competitor Assets),"RLTS: Ga-68-NGUL /​ Lu-177-DGUL; FPI-2265, CONV01-α; 225Ac-J591; [255Ac]Ac-PSMA-R2; 225Ac-PSMA-617; [225Ac]Ac-FL-020; Ludotadipep (177Lu-FC705); BAY2315497, 225Ac-pelgifatamab (BAY3546828); 225Ac-PSMA-Trillium (BAY3563254); 177Lu-rhPSMA-10.1; 64Cu-SAR-BBN and 67CU SAR-BBN, 177Lu-TLX591; 225Ac-TLX592; Pluvicto (Lu-PSMA-617); [225Ac]-AZD2284; 64Cu-SAR-bisPSMA; 67Cu-SAR-bisPSMA; 177Lu-PSMA-I&T; 68Ga-OncoACP3
+
+IO: JANX007; Xaluritamig (AMG509); REGN5678; REGN4336; REGN7075; ONC-392; Vudalimab; SX-682; Lorigerlimab; BMS-986460; AZD0754; SV-102; CAN-2409; VIR-5500; INKmune; GSK5458514; PT-112
+
+ADCs: FOR46; BNT324/DB-1311; ABBV-969; infinatamab deruxtecan (I-Dxd), vobramitamab duocarmizine; ADRX-0405
+
+Other: Xtandi (enzalutamide), Nubeqa (darolutamide), saruparib (AZD-5305), Talzenna (talazoparib), Rubraca (rucaparib), cabozantinib, mevrometostat, BMS-986365; opevesostat; ORIC-944; (R)-9bMS; ART-101; ACE-232; ARC-706; ASP5541; GDC-2992 / RO7656594 "
+High Priority (Trial Names),"ENZARAD, PrTK03, DASL-HiCaP, EMBARK, ARASTEP, PSMA-DC, ARANOTE, Capitello-281, TALAPRO-3, PSMAddition (previously had spelling error), EvoPAR-PRO1, PROpel, TALAPRO-2, TRITON-3, CONTACT-02, PSMAfore, ECLIPSE, SPLASH, CAPitello-280, ProstACT, MEVPRO-1, MEVPRO-2, MEVPRO-3; ALPHABREAK, ARASEC; AcTFirst; PSMAcTION; PSMAndARPI; CONVERGE-01; SatisfACtion; Ideate-Prostate01; rechArge; OMAHA1; OMAHA2; XALute"
+High Priority (New Additions),"ARPI (androgen receptor pathway inhibitors), androgen deprivation therapy, androgen receptor degraders​, all PARP mentions"
+New Rule,"Within a session, if any of the breakout titles are assigned a High priority, assign the same priority to it's Q&A or discussion session"
+Low priority ,Any abstract that mentions the word “prostate” or “mCRPC” or “mCSPC”

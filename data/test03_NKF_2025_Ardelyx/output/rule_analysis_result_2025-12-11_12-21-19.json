@@ -1,0 +1,191 @@
+{
+  "relevance_rule": {
+    "rule_text": "All abstracts that have client provided keywords",
+    "approach": "keywords",
+    "key_concepts": {
+      "keywords": [
+        "Hyperphosphatemia",
+        "Parathyroid hormone",
+        "Calcitriol",
+        "Chronic kidney disease",
+        "ESRD",
+        "Phosphate binder",
+        "Sevelamer",
+        "sucroferric oxyhydroxide",
+        "lanthanum carbonate",
+        "Ferric citrate",
+        "Calcium acetate",
+        "Constipation",
+        "Tenapanor",
+        "Claudins",
+        "FGF receptor",
+        "Albuminuria",
+        "nicotinamide",
+        "vitamin D",
+        "SGLT2 inhibitors",
+        "canagliflozin",
+        "Dapagliflozin",
+        "Empagliflozin",
+        "Ozempic",
+        "Calcium carbonate",
+        "Serum phosphate",
+        "Phosphate",
+        "Fibroblast growth factor 23",
+        "Hemodialysis",
+        "Dialysis",
+        "Dialysis Outcomes and Practice Patterns Study",
+        "Sodium hydrogen transport exchanger 3",
+        "sodium-dependent phosphate cotransporter 2b",
+        "KDIGO",
+        "KDOQI",
+        "Sodium",
+        "Phosphorus",
+        "Klotho",
+        "Tight junctions",
+        "Occludins",
+        "Vascular calcification",
+        "Bristol Stool Form Scale",
+        "Interdialytic weight gain",
+        "peritoneal dialysis",
+        "NTX1942",
+        "SLC34A2",
+        "Glomerular",
+        "CKD-MBD",
+        "Smooth muscle calcification",
+        "Oxylanthanum carbonate"
+      ],
+      "categories": [],
+      "contextual_concepts": []
+    },
+    "reasoning": "Explicitly stated as the relevance rule and matches client provided keywords."
+  },
+  "priority_rules": [
+    {
+      "priority": "High",
+      "rule_text": "Phase 2 data, Phase 3 data (including meta-analyses), real-world data (including PROs and registry data), Phosphate binders/phosphate lowering treatment",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Phase 2",
+          "Phase II",
+          "Phase 3",
+          "Phase III",
+          "meta-analysis",
+          "real-world data",
+          "patient reported outcomes",
+          "PROs",
+          "registry data",
+          "Phosphate binder",
+          "phosphate lowering treatment"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for phases, data types, and treatments; highest priority so no exclusions."
+    },
+    {
+      "priority": "Internal",
+      "rule_text": "Ardelyx sponsored abstracts",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Ardelyx"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [
+        "Phase 2",
+        "Phase II",
+        "Phase 3",
+        "Phase III",
+        "meta-analysis",
+        "real-world data",
+        "patient reported outcomes",
+        "PROs",
+        "registry data",
+        "Phosphate binder",
+        "phosphate lowering treatment"
+      ],
+      "reasoning": "Sponsor-based keyword; must exclude all High priority keywords for mutual exclusivity."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "Phase 1 data, retrospective analyses, prognostic studies, trial designs, preclinical studies; studies with trial outcomes and endpoints; other general studies",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Phase 1",
+          "Phase I",
+          "retrospective analysis",
+          "retrospective study",
+          "prognostic study",
+          "trial design",
+          "preclinical study",
+          "trial outcomes",
+          "endpoints",
+          "general study"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [
+        "Phase 2",
+        "Phase II",
+        "Phase 3",
+        "Phase III",
+        "meta-analysis",
+        "real-world data",
+        "patient reported outcomes",
+        "PROs",
+        "registry data",
+        "Phosphate binder",
+        "phosphate lowering treatment",
+        "Ardelyx"
+      ],
+      "reasoning": "Keyword-based for study types; excludes all High and Internal priority keywords for exclusivity."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "All abstracts that only have mention of an indication and does not include any other data",
+      "approach": "context",
+      "key_concepts": {
+        "keywords": [],
+        "categories": [],
+        "contextual_concepts": [
+          "mention of indication only",
+          "no data presented",
+          "no study results",
+          "no endpoints",
+          "no trial phase"
+        ]
+      },
+      "exclusions": [
+        "Phase 2",
+        "Phase II",
+        "Phase 3",
+        "Phase III",
+        "meta-analysis",
+        "real-world data",
+        "patient reported outcomes",
+        "PROs",
+        "registry data",
+        "Phosphate binder",
+        "phosphate lowering treatment",
+        "Ardelyx",
+        "Phase 1",
+        "Phase I",
+        "retrospective analysis",
+        "retrospective study",
+        "prognostic study",
+        "trial design",
+        "preclinical study",
+        "trial outcomes",
+        "endpoints",
+        "general study"
+      ],
+      "reasoning": "Requires semantic/contextual understanding to identify abstracts with only indication mention and no data; excludes all higher priorities."
+    }
+  ]
+}

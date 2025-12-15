@@ -1,0 +1,1166 @@
+{
+  "relevance_rule": {},
+  "priority_rules": [
+    {
+      "priority": "High",
+      "rule_text": "MALT-1 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "MALT-1",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for MALT-1 and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "CD19 + (NHL or FL or DLBCL or CLL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD19",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD19 and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "T-cell engager + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "T-cell engager",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for T-cell engager and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "T-cell redirection + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "T-cell redirection",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for T-cell redirection and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "ctDNA + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "ctDNA",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for ctDNA and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Gamma delta + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Gamma delta",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Gamma delta and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "\u03b3\u03b4 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "\u03b3\u03b4",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for \u03b3\u03b4 and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "CD28 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD28",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD28 and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "4-1BBL + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "4-1BBL",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for 4-1BBL and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "CD137 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD137",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD137 and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Co-stimulation + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Co-stimulation",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Co-stimulation and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Cell Therapy + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Cell Therapy",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Cell Therapy and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "CAR-T or CART or CAR T+ (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CAR-T",
+          "CART",
+          "CAR T",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CAR-T and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Bispecific antibody + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Bispecific antibody",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Bispecific antibody and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "PROTAC + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "PROTAC",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for PROTAC and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "degrader + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "degrader",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for degrader and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "trispecific + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "trispecific",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for trispecific and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "glofitamab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "glofitamab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for glofitamab."
+    },
+    {
+      "priority": "High",
+      "rule_text": "mosunetuzumab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "mosunetuzumab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for mosunetuzumab."
+    },
+    {
+      "priority": "High",
+      "rule_text": "epcoritamab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "epcoritamab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for epcoritamab."
+    },
+    {
+      "priority": "High",
+      "rule_text": "dual targeting + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "dual targeting",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for dual targeting and any of the listed disease terms."
+    },
+    {
+      "priority": "High",
+      "rule_text": "axicabtagen ciloleucel",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "axicabtagen ciloleucel"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for axicabtagen ciloleucel."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Lisocabtagene Maraleucel",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Lisocabtagene Maraleucel"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Lisocabtagene Maraleucel."
+    },
+    {
+      "priority": "High",
+      "rule_text": "BTK degrader",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "BTK degrader"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for BTK degrader."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Zamtocabtagene Autoleucel",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Zamtocabtagene Autoleucel"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Zamtocabtagene Autoleucel."
+    },
+    {
+      "priority": "High",
+      "rule_text": "KITE-363",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "KITE-363"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for KITE-363."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Cemacabtagene ansegedleucel",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Cemacabtagene ansegedleucel"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Cemacabtagene ansegedleucel."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Kite-753",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Kite-753"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Kite-753."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Kite-197",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Kite-197"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Kite-197."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Englumafusp alfa",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Englumafusp alfa"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Englumafusp alfa."
+    },
+    {
+      "priority": "High",
+      "rule_text": "RG6333",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "RG6333"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for RG6333."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Rapcabtagene\u00a0autoleucel\u00a0",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Rapcabtagene autoleucel"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Rapcabtagene autoleucel."
+    },
+    {
+      "priority": "High",
+      "rule_text": "LYL314 (formely, IMPT-314)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "LYL314",
+          "IMPT-314"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for LYL314 or IMPT-314."
+    },
+    {
+      "priority": "High",
+      "rule_text": "P-CD19CD20-ALLO1",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "P-CD19CD20-ALLO1"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for P-CD19CD20-ALLO1."
+    },
+    {
+      "priority": "High",
+      "rule_text": "GLPG5201",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "GLPG5201"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for GLPG5201."
+    },
+    {
+      "priority": "High",
+      "rule_text": "GLPG5101",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "GLPG5101"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for GLPG5101."
+    },
+    {
+      "priority": "High",
+      "rule_text": "RGEN5837",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "RGEN5837"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for RGEN5837."
+    },
+    {
+      "priority": "High",
+      "rule_text": "BGB-16673",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "BGB-16673"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for BGB-16673."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "CD22 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD22",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD22 and any of the listed disease terms."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "CD37 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD37",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD37 and any of the listed disease terms."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "CAR-NK + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CAR-NK",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CAR-NK and any of the listed disease terms."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "tisagenlecleucel",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "tisagenlecleucel"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for tisagenlecleucel."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "ROR1 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "ROR1",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for ROR1 and any of the listed disease terms."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "MB-106",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "MB-106"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for MB-106."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "Firi-cel or C+A109RG-022",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Firi-cel",
+          "C+A109RG-022"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Firi-cel or C+A109RG-022."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "bbT369",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "bbT369"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for bbT369."
+    },
+    {
+      "priority": "Low",
+      "rule_text": "SAR442257",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "SAR442257"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for SAR442257."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "CD79 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD79",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD79 and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "CD79b + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD79b",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD79b and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "BCL-6 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "BCL-6",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for BCL-6 and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "BFL1 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "BFL1",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for BFL1 and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "mutant (m)BCL2 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "mutant (m)BCL2",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for mutant (m)BCL2 and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "Tumor microenvironment + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Tumor microenvironment",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Tumor microenvironment and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "Natural Killer + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Natural Killer",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Natural Killer and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "MRD + (NHL or FL or DLBCL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "MRD",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for MRD and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "Vbeta17 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Vbeta17",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Vbeta17 and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "allogeneic + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "allogeneic",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for allogeneic and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "CD20 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CD20",
+          "NHL",
+          "FL",
+          "DLBCL",
+          "CLL",
+          "MCL",
+          "WM",
+          "MZL",
+          "b-cell malignancies"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CD20 and any of the listed disease terms."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "tafasitamab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "tafasitamab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for tafasitamab."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "Odronextamab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Odronextamab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Odronextamab."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "Polatuzumab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Polatuzumab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for Polatuzumab."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "CB-010",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CB-010"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CB-010."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "CTX-112",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CTX-112"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for CTX-112."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "AZD0486 (formely, TNB-486)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "AZD0486",
+          "TNB-486"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "Direct keyword matching for AZD0486 or TNB-486."
+    }
+  ]
+}

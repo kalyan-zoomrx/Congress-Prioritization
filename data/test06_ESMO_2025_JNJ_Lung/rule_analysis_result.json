@@ -1,0 +1,113 @@
+{
+  "relevance_rule": {},
+  "priority_rules": [
+    {
+      "priority": "High",
+      "rule_text": "Osimertinib, Tagrisso, Savolitinib, Datopotamab deruxtecan, Dato-DXd, Datroway, HER3-DXd, patritumab deruxtecan, TROP2 (and ADC), HER3, EGFR Bispecifics, Sunvozertinib, Zipalertinib, Firmonertinib, Furmonertinib, Ivonescimab, Sac-TMT, sacituzumab tirumotecan, MK-2870, SKB-264, SKB264, MCLA-129 or pamvatami, AZD-9592 or AZD9592 or tilatamig samrotecan, BL-B01D1 or izalontamab brengitecan, SI-B-001 or izalontamab",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Osimertinib",
+          "Tagrisso",
+          "Savolitinib",
+          "Datopotamab deruxtecan",
+          "Dato-DXd",
+          "Datroway",
+          "HER3-DXd",
+          "patritumab deruxtecan",
+          "TROP2",
+          "ADC",
+          "HER3",
+          "EGFR Bispecifics",
+          "Sunvozertinib",
+          "Zipalertinib",
+          "Firmonertinib",
+          "Furmonertinib",
+          "Ivonescimab",
+          "Sac-TMT",
+          "sacituzumab tirumotecan",
+          "MK-2870",
+          "SKB-264",
+          "SKB264",
+          "MCLA-129",
+          "pamvatami",
+          "AZD-9592",
+          "AZD9592",
+          "tilatamig samrotecan",
+          "BL-B01D1",
+          "izalontamab brengitecan",
+          "SI-B-001",
+          "izalontamab"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [
+        "4th-Gen EGFR TKIs",
+        "ALK",
+        "ROS1",
+        "KRAS-G12C",
+        "NSCLC",
+        "SCLC",
+        "Antibody Drug Conjugate"
+      ],
+      "reasoning": "This rule is a priority assignment rule using keywords. All terms are specific drug names or targets, matching client keywords. Exclusions are added to ensure mutual exclusivity with the Medium priority rule."
+    },
+    {
+      "priority": "Medium",
+      "rule_text": "4th-Gen (fourth-gen) EGFR TKIs, ALK, ROS1, KRAS-G12C and NSCLC, any ADC for lung (NSCLC or SCLC)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "4th-Gen EGFR TKIs",
+          "fourth-gen EGFR TKIs",
+          "ALK",
+          "ROS1",
+          "KRAS-G12C",
+          "NSCLC",
+          "SCLC",
+          "Antibody Drug Conjugate",
+          "ADC"
+        ],
+        "categories": [
+          "Non-Small Cell Lung Cancer",
+          "Small-Cell Lung Cancer"
+        ],
+        "contextual_concepts": []
+      },
+      "exclusions": [
+        "Osimertinib",
+        "Tagrisso",
+        "Savolitinib",
+        "Datopotamab deruxtecan",
+        "Dato-DXd",
+        "Datroway",
+        "HER3-DXd",
+        "patritumab deruxtecan",
+        "TROP2",
+        "HER3",
+        "EGFR Bispecifics",
+        "Sunvozertinib",
+        "Zipalertinib",
+        "Firmonertinib",
+        "Furmonertinib",
+        "Ivonescimab",
+        "Sac-TMT",
+        "sacituzumab tirumotecan",
+        "MK-2870",
+        "SKB-264",
+        "SKB264",
+        "MCLA-129",
+        "pamvatami",
+        "AZD-9592",
+        "AZD9592",
+        "tilatamig samrotecan",
+        "BL-B01D1",
+        "izalontamab brengitecan",
+        "SI-B-001",
+        "izalontamab"
+      ],
+      "reasoning": "This rule is a priority assignment rule using keywords. All terms are specific targets, mutations, or cancer types, matching client keywords. Exclusions are added to ensure mutual exclusivity with the High priority rule."
+    }
+  ]
+}

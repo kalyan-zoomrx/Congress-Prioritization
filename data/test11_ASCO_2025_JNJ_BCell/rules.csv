@@ -1,0 +1,66 @@
+﻿Priority,Rule
+High,MALT-1 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,CD19 + (NHL or FL or DLBCL or CLL or b-cell malignancies)
+High,T-cell engager + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,T-cell redirection + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,ctDNA + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,Gamma delta + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,γδ + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,CD28 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,4-1BBL + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,CD137 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,Co-stimulation + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,Cell Therapy + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,CAR-T or CART or CAR T+ (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,Bispecific antibody + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,PROTAC + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,degrader + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,trispecific + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,glofitamab
+High,mosunetuzumab
+High,epcoritamab
+High,dual targeting + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,axicabtagen ciloleucel
+High,Lisocabtagene Maraleucel
+High,T-cell redirection + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+High,BTK degrader
+High,Zamtocabtagene Autoleucel
+High,KITE-363
+High,Cemacabtagene ansegedleucel
+High,Kite-753
+High,Kite-197
+High,Englumafusp alfa
+High,RG6333
+High,Rapcabtagene autoleucel 
+High,"LYL314 (formely, IMPT-314)"
+High,P-CD19CD20-ALLO1
+High,GLPG5201
+High,GLPG5101
+High,RGEN5837
+High,BGB-16673
+Low,CD22 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Low,CD37 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Low,CAR-NK + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Low,tisagenlecleucel
+Low,ROR1 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Low,MB-106
+Low,Firi-cel or C+A109RG-022
+Low,bbT369
+Low,SAR442257
+Medium,CD79 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,CD79b + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,BCL-6 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,BFL1 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,mutant (m)BCL2 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,Tumor microenvironment + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,Natural Killer + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,MRD + (NHL or FL or DLBCL or MCL or WM or MZL or b-cell malignancies)
+Medium,Vbeta17 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,allogeneic + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,CD20 + (NHL or FL or DLBCL or CLL or MCL or WM or MZL or b-cell malignancies)
+Medium,tafasitamab
+Medium,Odronextamab
+Medium,Polatuzumab
+Medium,CB-010 
+Medium,CTX-112
+Medium,"AZD0486 (formely, TNB-486)"

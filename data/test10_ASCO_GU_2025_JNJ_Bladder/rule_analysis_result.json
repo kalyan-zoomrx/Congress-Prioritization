@@ -1,0 +1,115 @@
+{
+  "relevance_rule": {},
+  "priority_rules": [
+    {
+      "priority": "High",
+      "rule_text": "Sessions mentioning any of the following competitor asset names: Adstiladrin (nadofaragene firadenovec), Anktiva (N-803, Nogapendekin alfa inbakicept), Cretostimogene Grenadenorepvec (CG0070), Oncofid-P-B, TLD-1433, Detalimogene Voraplasmid (EG-70), TARA-002, Imfinzi (durvalumab), Tecentriq (atezolizumab), sasanlimab, Keytruda (pembrolizumab), gemcitabine, docetaxel, rescue BCG, UGN-102, UGN-103, Bavencio (avelumab), Padcev (enfortumab vedotin), Trodelvy (sacituzumab govitecan)",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "Adstiladrin",
+          "nadofaragene firadenovec",
+          "Anktiva",
+          "N-803",
+          "Nogapendekin alfa inbakicept",
+          "Cretostimogene Grenadenorepvec",
+          "CG0070",
+          "Oncofid-P-B",
+          "TLD-1433",
+          "Detalimogene Voraplasmid",
+          "EG-70",
+          "TARA-002",
+          "Imfinzi",
+          "durvalumab",
+          "Tecentriq",
+          "atezolizumab",
+          "sasanlimab",
+          "Keytruda",
+          "pembrolizumab",
+          "gemcitabine",
+          "docetaxel",
+          "rescue BCG",
+          "UGN-102",
+          "UGN-103",
+          "Bavencio",
+          "avelumab",
+          "Padcev",
+          "enfortumab vedotin",
+          "Trodelvy",
+          "sacituzumab govitecan"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "This rule is based on explicit competitor asset names, which can be matched using keywords. It is mutually exclusive from other rules as it is specific to asset names."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Sessions mentioning any of the following trial names: CORE-001, QUILT3.032, KEYNOTE-676, KEYNOTE-057, BOND-003, ORION-BC, LEGEND, ADVANCED-2, ABLE-22, ALBAN, POTOMAC, CREST, QUILT-2.004, BRIDGE, PATAPSCO, ENVISION, UTOPIA, PIVOT-006, CORE-008, ATLAS, KEYNOTE-992, NIAGARA, VOLGA",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "CORE-001",
+          "QUILT3.032",
+          "KEYNOTE-676",
+          "KEYNOTE-057",
+          "BOND-003",
+          "ORION-BC",
+          "LEGEND",
+          "ADVANCED-2",
+          "ABLE-22",
+          "ALBAN",
+          "POTOMAC",
+          "CREST",
+          "QUILT-2.004",
+          "BRIDGE",
+          "PATAPSCO",
+          "ENVISION",
+          "UTOPIA",
+          "PIVOT-006",
+          "CORE-008",
+          "ATLAS",
+          "KEYNOTE-992",
+          "NIAGARA",
+          "VOLGA"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "This rule is based on explicit trial names, which can be matched using keywords. It is mutually exclusive from other rules as it is specific to trial names."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Sessions mentioning any of the following patient populations: High risk NMIBC BCG-unresponsive, intermediate risk NMIBC, MIBC",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "High risk NMIBC BCG-unresponsive",
+          "intermediate risk NMIBC",
+          "MIBC"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "This rule is based on explicit patient population terms, which can be matched using keywords. It is mutually exclusive from other rules as it is specific to patient populations."
+    },
+    {
+      "priority": "High",
+      "rule_text": "Sessions mentioning the keyword 'bladder sparing'",
+      "approach": "keywords",
+      "key_concepts": {
+        "keywords": [
+          "bladder sparing",
+          "bladder-sparing"
+        ],
+        "categories": [],
+        "contextual_concepts": []
+      },
+      "exclusions": [],
+      "reasoning": "This rule is based on a specific keyword, which can be matched using keywords. It is mutually exclusive from other rules as it is specific to the bladder sparing concept."
+    }
+  ]
+}
