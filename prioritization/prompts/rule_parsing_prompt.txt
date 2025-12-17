@@ -29,7 +29,7 @@ Guidelines for classification:
 
 Guidelines for rule text:
 Always check if a priority rule is mutually exclusive compared to the other lower ranked priority rules.
-If not, modify the lower ranked priority rule text by including/excluding specific concept(s) to make it mutually exclusive.
+If not, modify the lower ranked priority rule text by including/excluding specific concept(s) to make it mutually exclusive as we are giving higher precedence to higher ranked rules.
 
 Last but not the least, follow the user instructions, if provided, to make modifications to your output.
 

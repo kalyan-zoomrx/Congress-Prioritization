@@ -3,7 +3,7 @@ from typing import Dict, Any, Tuple, Generator
 from prioritization.utils.logger import get_logger
 from prioritization.utils.litellm import call_llm_with_user_prompt
 
-logger = get_logger("[1.0] Rule Analysis")
+logger = get_logger("Rule Analysis")
 
 class RuleParserAgent:
 
@@ -42,21 +42,26 @@ class RuleParserAgent:
                     custom_synonyms_data = f.read()
 
             llm_response = call_llm_with_user_prompt(
-                prompt_name="prioritization_rule_analysis_prompt",
+                prompt_name="rule_parsing_prompt",
                 format_params={
                     "rules": rules_data,
                     "client_keywords": client_keywords_data,
                     "custom_synonyms": custom_synonyms_data,
                     "user_instructions": ""
                 },
-                model_name=model
+                model_name=model,
+                json_output=True
             )
 
             # Validating the response for JSON compatibility
             try:
+                llm_response.content = llm_response.content.replace("```json", "").replace("```", "")
                 rule_analysis = eval(llm_response.content)
             except Exception as e:
                 logger.error(f"Error parsing LLM response: {e}")
+                # Save the response to a file
+                with open("llm_response.txt", "w", encoding="utf-8") as f:
+                    f.write(llm_response.content)
                 raise
 
             logger.info("Rule parsing completed")

@@ -39,12 +39,12 @@ def get_logger(name: str = "app"):
     class CustomFormatter(logging.Formatter):
         def format(self, record):
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            filename = record.filename
+            app_name = record.name
             line = record.lineno
             level = record.levelname
             message = record.getMessage()
 
-            return f"[{timestamp}]: {filename}: line {line}: {level}: {message}"
+            return f"[{timestamp}]: {app_name}: line {line}: {level}: {message}"
 
     formatter = CustomFormatter()
 

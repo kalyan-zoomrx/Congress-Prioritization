@@ -1,113 +1,113 @@
 keyword,category,label
-Non-Small Cell Lung Cancer,Tumor Type,Disease
-Pancreatic Ductal Adenocarcinoma,Tumor Type,Disease
-Colorectal Cancer,Tumor Type,Disease
-AMG-510,Competitors,Active Ingredient
 Adagrasib,Competitors,Active Ingredient
-LY-3537982,Competitors,Active Ingredient
+ALTA3263,Competitors,Active Ingredient
+AMG 410,Competitors,Active Ingredient
+AMG-510,Competitors,Active Ingredient
+ASP3082,Competitors,Active Ingredient
+ASP4396,Competitors,Active Ingredient
+AST-24081,Competitors,Active Ingredient
 Avutometinib,Competitors,Active Ingredient
-GDC-6036,Competitors,Active Ingredient
-JAB21822,Competitors,Active Ingredient
-ELI-002,Competitors,Active Ingredient
-RMC-6236,Competitors,Active Ingredient
-RMC-6291,Competitors,Active Ingredient
-Onvansertib,Competitors,Active Ingredient
-MK-1084,Competitors,Active Ingredient
-Zolbetuximab,Competitors,Active Ingredient
-Pancreatic Cancer,Tumor Type,Disease
-HBI-2438_,Competitors,Active Ingredient
-Garsorasib,Competitors,Active Ingredient
+AZD0022,Competitors,Active Ingredient
+BBO-10203,Competitors,Active Ingredient
+BBO-11818,Competitors,Active Ingredient
 BBO-8520,Competitors,Active Ingredient
+Beta catenin,Research,Target
+BGB-53038,Competitors,Active Ingredient
+BI 3706674,Competitors,Active Ingredient
+BRSD-143,Competitors,Active Ingredient
+BTDX-4933,Competitors,Active Ingredient
+CHK1,Research,Target
+Colorectal Cancer,Tumor Type,Disease
+CypA,Research,Target
+D3S-001,Competitors,Active Ingredient
+D3S-001_,Competitors,Active Ingredient
+ELI-002,Competitors,Active Ingredient
+ERAS-0015,Competitors,Active Ingredient
+ERAS-4001,Competitors,Active Ingredient
+FKBP,Research,Target
 FMC-376,Competitors,Active Ingredient
+fulzerasib,Competitors,Active Ingredient
+G12,Genotype,Target
+G12A,Genotype,Target
+G12C,Genotype,Target
+G12D,Genotype,Target
+G12E,Genotype,Target
+G12F,Genotype,Target
+G12I,Genotype,Target
+G12L,Genotype,Target
+G12N,Genotype,Target
+G12R,Genotype,Target
+G12S,Genotype,Target
+G12V,Genotype,Target
+G13,Genotype,Target
+G13C,Genotype,Target
+G13D,Genotype,Target
+G13N,Genotype,Target
+G13P,Genotype,Target
+G13R,Genotype,Target
+G13S,Genotype,Target
+G13V,Genotype,Target
+Garsorasib,Competitors,Active Ingredient
+GDC-6036,Competitors,Active Ingredient
+GDC-7035,Competitors,Active Ingredient
+HBI-2438_,Competitors,Active Ingredient
+HBI-2438_,Competitors,Active Ingredient
+HRAS,Genotype,Target
+HRS-4642,Competitors,Active Ingredient
+INCB161734,Competitors,Active Ingredient
+INCB186748,Competitors,Active Ingredient
+Ivonescimab,Competitors,Active Ingredient
+JAB21822,Competitors,Active Ingredient
+JAB-23E73,Competitors,Active Ingredient
+JYP0015,Competitors,Active Ingredient
+KRAS,Genotype,Target
+KRAS-Multi,Genotype,Target
+LY-3537982,Competitors,Active Ingredient
+LY3962673,Competitors,Active Ingredient
+LY4066434,Competitors,Active Ingredient
+MK-1084,Competitors,Active Ingredient
+MYC,Research,Target
+Non-Small Cell Lung Cancer,Tumor Type,Disease
+NRAS,Genotype,Target
+Onvansertib,Competitors,Active Ingredient
+Pancreatic Cancer,Tumor Type,Disease
+Pancreatic Ductal Adenocarcinoma,Tumor Type,Disease
+Pan-KRAS,Genotype,Target
+Pan-RAS,Genotype,Target
+PAX8,Research,Target
+PF-07934040,Competitors,Active Ingredient
+PF-07985045,Competitors,Active Ingredient
+PKN2,Research,Target
+PT886,Competitors,Active Ingredient
+PTK2,Research,Target
+Q61,Genotype,Target
+Q61E,Genotype,Target
+Q61H,Genotype,Target
+Q61K,Genotype,Target
+Q61L,Genotype,Target
+Q61P,Genotype,Target
+Q61R,Genotype,Target
 QTX3034,Competitors,Active Ingredient
 QTX3046,Competitors,Active Ingredient
 QTX3544,Competitors,Active Ingredient
-RAS,Genotype,Target
-KRAS,Genotype,Target
-NRAS,Genotype,Target
-HRAS,Genotype,Target
-RAS-multi,Genotype,Target
-Pan-RAS,Genotype,Target
-RAS(ON),Genotype,Target
-BTDX-4933,Competitors,Active Ingredient
-RMC-9805,Competitors,Active Ingredient
-G12,Genotype,Target
-Q61,Genotype,Target
-G13,Genotype,Target
-PF-07934040,Competitors,Active Ingredient
-HRS-4642,Competitors,Active Ingredient
 Quemliclustat,Competitors,Active Ingredient
-ASP4396,Competitors,Active Ingredient
-LY4066434,Competitors,Active Ingredient
-RAS(on) Mutations,Genotype,Target
+RAF1,Research,Target
+RAS,Genotype,Target
 RAS Wild-type,Genotype,Patient Subgroup
-Ivonescimab,Competitors,Active Ingredient
 RAS(off),Genotype,Target
 RAS(off) Mutations,Genotype,Target
+RAS(ON),Genotype,Target
+RAS(on) Mutations,Genotype,Target
+RAS-multi,Genotype,Target
+RMC-6236,Competitors,Active Ingredient
+RMC-6291,Competitors,Active Ingredient
+RMC-9805,Competitors,Active Ingredient
 RO7673396,Competitors,Active Ingredient
-Beta catenin,Research,Target
 SHOC2,Research,Target
-CHK1,Research,Target
-PAX8,Research,Target
-RAF1,Research,Target
-CypA,Research,Target
-PKN2,Research,Target
-PTK2,Research,Target
-FKBP,Research,Target
+sosimerasib,Competitors,Active Ingredient
 STK7,Research,Target
 TP53,Research,Target
-sosimerasib,Competitors,Active Ingredient
-D3S-001,Competitors,Active Ingredient
-fulzerasib,Competitors,Active Ingredient
-INCB161734,Competitors,Active Ingredient
 TSN1611,Competitors,Active Ingredient
-LY3962673,Competitors,Active Ingredient
-AZD0022,Competitors,Active Ingredient
 VS-7375,Competitors,Active Ingredient
-JYP0015,Competitors,Active Ingredient
-ERAS-0015,Competitors,Active Ingredient
-ERAS-4001,Competitors,Active Ingredient
-BI 3706674,Competitors,Active Ingredient
-PF-07985045,Competitors,Active Ingredient
-BGB-53038,Competitors,Active Ingredient
-ALTA3263,Competitors,Active Ingredient
-BBO-11818,Competitors,Active Ingredient
-JAB-23E73,Competitors,Active Ingredient
-AMG 410,Competitors,Active Ingredient
-BBO-10203,Competitors,Active Ingredient
 VVD-159642,Competitors,Active Ingredient
-GDC-7035,Competitors,Active Ingredient
-INCB186748,Competitors,Active Ingredient
-AST-24081,Competitors,Active Ingredient
-MYC,Research,Target
-ASP3082,Competitors,Active Ingredient
-HBI-2438_,Competitors,Active Ingredient
-D3S-001_,Competitors,Active Ingredient
-BRSD-143,Competitors,Active Ingredient
-Pan-KRAS,Genotype,Target
-KRAS-Multi,Genotype,Target
-G13C,Genotype,Target
-G13D,Genotype,Target
-G13R,Genotype,Target
-G13V,Genotype,Target
-G13P,Genotype,Target
-G13N,Genotype,Target
-G13S,Genotype,Target
-Q61H,Genotype,Target
-Q61L,Genotype,Target
-Q61R,Genotype,Target
-Q61K,Genotype,Target
-Q61P,Genotype,Target
-Q61E,Genotype,Target
-G12C,Genotype,Target
-G12V,Genotype,Target
-G12D,Genotype,Target
-G12A,Genotype,Target
-G12S,Genotype,Target
-G12F,Genotype,Target
-G12R,Genotype,Target
-G12L,Genotype,Target
-G12I,Genotype,Target
-G12E,Genotype,Target
-G12N,Genotype,Target
-PT886,Competitors,Active Ingredient
+Zolbetuximab,Competitors,Active Ingredient
