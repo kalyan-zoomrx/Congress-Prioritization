@@ -19,8 +19,8 @@
             }
           ]
         },
-        "exclude_logic": null,
-        "feedback": ""
+        "exclude_logic": {},
+        "reasoning": ""
       }
     ]
   },
@@ -53,7 +53,8 @@
                 "values": ["lung cancer", "colon cancer"]
               }
             ]
-          }
+          },
+          "reasoning": ""
         },
         {
           "rule_id": "HIGH_R2",
@@ -73,7 +74,8 @@
               }
             ]
           },
-          "exclude_logic": null
+          "exclude_logic": {},
+          "reasoning": ""
         }
       ]
     },
@@ -99,7 +101,8 @@
               }
             ]
           },
-          "exclude_logic": null
+          "exclude_logic": {},
+          "reasoning": ""
         }
       ]
     },
@@ -123,7 +126,8 @@
               }
             ]
           },
-          "exclude_logic": null
+          "exclude_logic": {},
+          "reasoning": ""
         }
       ]
     }

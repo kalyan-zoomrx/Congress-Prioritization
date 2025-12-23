@@ -4,6 +4,7 @@ import ast
 from typing import Dict, Any, Optional
 from datetime import datetime
 from prioritization.utils.logger import get_logger
+from prioritization.utils.config import LitellmConfig
 from prioritization.utils.state import PrioritizationState
 from prioritization.utils.litellm import call_llm_with_user_prompt
 
@@ -142,12 +143,12 @@ class RuleAnalysisNodes:
 
         logger.info("Saving Parsed Rules")
         directory = state["directory"]
-        os.makedirs(os.path.join(directory, "output"), exist_ok=True)
+        os.makedirs(os.path.join(directory, LitellmConfig.OUTPUT_FOLDER), exist_ok=True)
         
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         model_name = state.get("model", "unknown").split("/")[-1]
         output_filename = f"parsed_rules_{timestamp}_{model_name}.json"
-        output_path = os.path.join(directory, "output", output_filename)
+        output_path = os.path.join(directory, LitellmConfig.OUTPUT_FOLDER, output_filename)
         
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(state["parsed_rules"], f, indent=2)

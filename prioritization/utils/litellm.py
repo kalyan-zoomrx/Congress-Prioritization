@@ -41,7 +41,7 @@ def call_llm_with_tracing(
 ):
 
     if not model_name:
-        model_name = LitellmConfig.model
+        model_name = LitellmConfig.DEFAULT_MODEL
         logger.info(f"Default model used: {model_name}")
     else:
         logger.info(f"Model used: {model_name}")
