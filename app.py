@@ -8,7 +8,7 @@ logger = get_logger("Main")
 tracker = SpendTracker()
 tracker.initiate()
 
-TEST_DIRECTORY = "data/test06_ESMO_2025_JNJ_Lung/"
+TEST_DIRECTORY = "data/test02_ERA_2025_Calliditas/"
 #MODEL = "gpt-4.1"
 #MODEL = "gemini/gemini-2.5-pro"
 MODEL = "claude-haiku-4-5"
@@ -18,8 +18,10 @@ try:
     initiate_supervisor(TEST_DIRECTORY, MODEL)
     logger.info("Supervisor Completed Successfully")
     metrics = tracker.close()
-    logger.info(f"Amount Spent: {metrics['spent']}")
+    logger.info(f"Amount Spent: {metrics['spent']} Total Spent: {metrics['total_spent']}")
+
 except Exception as e:
     logger.error(e)
+    logger.error("Supervisor Failed")
     metrics = tracker.close()
-    logger.info(f"Amount Spent: {metrics['spent']}")
+    logger.info(f"ERROR - Amount Spent: {metrics['spent']} Total Spent: {metrics['total_spent']}")

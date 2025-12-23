@@ -1,0 +1,131 @@
+{
+  "relevance": {
+    "rules": [
+      {
+        "rule_id": "REL_R1",
+        "rule_text": "Abstract with client given keywords",
+        "processing_type": "keyword_filtering",
+        "include_logic": {
+          "any_of": [
+            {
+              "categories": ["client_keywords"],
+              "field": "keywords",
+              "values": [
+                "ALK",
+                "Assessment of Multi-type Cancer Using Ctdna",
+                "BostonGene",
+                "Caris"
+              ]
+            }
+          ]
+        },
+        "exclude_logic": null,
+        "feedback": ""
+      }
+    ]
+  },
+  "priorities": {
+    "High": {
+      "rules": [
+        {
+          "rule_id": "HIGH_R1",
+          "rule_text": "All abstracts with mentions of competitors or with KRAS, RAS genotypes without lung, colon cancer tumor types",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["competitors"],
+                "field": "keywords",
+                "values": ["BostonGene", "Caris"]
+              },
+              {
+                "categories": ["genotypes"],
+                "field": "keywords",
+                "values": ["kras mutant", "ras mutant"]
+              }
+            ]
+          },
+          "exclude_logic": {
+            "any_of": [
+              {
+                "categories": ["tumor_types"],
+                "field": "keywords",
+                "values": ["lung cancer", "colon cancer"]
+              }
+            ]
+          }
+        },
+        {
+          "rule_id": "HIGH_R2",
+          "rule_text": "Abstracts with tumor types in combination with client specified genotypes",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "all_of": [
+              {
+                "categories": ["tumor_types"],
+                "field": "keywords",
+                "values": ["lung cancer", "colon cancer"]
+              },
+              {
+                "categories": ["genotypes"],
+                "field": "keywords",
+                "values": ["ALK", "BRAF"]
+              }
+            ]
+          },
+          "exclude_logic": null
+        }
+      ]
+    },
+    "Medium": {
+      "rules": [
+        {
+          "rule_id": "MED_R1",
+          "rule_text": "All abstracts with mentions of genotypes",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["genotypes"],
+                "field": "keywords",
+                "values": [
+                  "kras mutant",
+                  "ras mutant",
+                  "kras wild type",
+                  "ras wild type",
+                  "ALK",
+                  "BRAF"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": null
+        }
+      ]
+    },
+    "Low": {
+      "rules": [
+        {
+          "rule_id": "LOW_R1",
+          "rule_text": "Abstracts with tumor types",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["tumor_types"],
+                "field": "keywords",
+                "values": [
+                  "lung cancer",
+                  "colon cancer",
+                  "breast cancer",
+                  "pancreatic cancer"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": null
+        }
+      ]
+    }
+  }
+}

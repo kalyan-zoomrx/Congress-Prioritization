@@ -1,6 +1,8 @@
 import os
 import json
 import pandas as pd
+import json
+import pandas as pd
 from typing import Any, Dict
 from functools import lru_cache
 from prioritization.utils.logger import get_logger
@@ -13,11 +15,11 @@ def get_prompt(prompt_name: str):
     try:
         with open(f"prioritization/prompts/{prompt_name}.txt", "r") as f:
             prompt = f.read()
-            logger.info(f"Prompt {prompt_name} read successfully")
+            logger.info(f"Prompt: {prompt_name} read successfully")
             return prompt
 
     except FileNotFoundError:
-        logger.error(f"Prompt {prompt_name} not found")
+        logger.error(f"Prompt: {prompt_name} not found")
         raise
     except Exception as e:
         logger.error(f"Error reading prompt {prompt_name}: {str(e)}")
@@ -100,3 +102,63 @@ def normalize_json_to_dataframe(json_object: Dict[str, Any] | list[Dict[str, Any
     except Exception:
         logger.exception("Failed JSON → CSV normalization")
         raise
+
+
+
+
+def json_rules_to_csv_pandas(json_data):
+    rows = []
+
+    # -------- Relevance --------
+    for rule in json_data.get("relevance", {}).get("rules", []):
+        include_logic = rule["include_logic"]
+        logic_type = "any_of" if "any_of" in include_logic else "all_of"
+
+        for block in include_logic.get(logic_type, []):
+            rows.append({
+                "section": "relevance",
+                "priority_level": "",
+                "rule_id": rule["rule_id"],
+                "rule_text": rule["rule_text"],
+                "processing_type": rule["processing_type"],
+                "logic_type": logic_type,
+                "categories": "|".join(block.get("categories", [])),
+                "field": block.get("field", ""),
+                "values": "|".join(block.get("values", [])),
+                "exclude_logic": json.dumps(rule["exclude_logic"]) if rule["exclude_logic"] else ""
+            })
+
+    # -------- Priorities --------
+    for priority, priority_block in json_data.get("priorities", {}).items():
+        for rule in priority_block.get("rules", []):
+            include_logic = rule["include_logic"]
+            logic_type = "any_of" if "any_of" in include_logic else "all_of"
+
+            for block in include_logic.get(logic_type, []):
+                rows.append({
+                    "section": "priorities",
+                    "priority_level": priority,
+                    "rule_id": rule["rule_id"],
+                    "rule_text": rule["rule_text"],
+                    "processing_type": rule["processing_type"],
+                    "logic_type": logic_type,
+                    "categories": "|".join(block.get("categories", [])),
+                    "field": block.get("field", ""),
+                    "values": "|".join(block.get("values", [])),
+                    "exclude_logic": json.dumps(rule["exclude_logic"]) if rule["exclude_logic"] else ""
+                })
+
+    # -------- Create DataFrame --------
+    df = pd.DataFrame(rows, columns=[
+        "section",
+        "priority_level",
+        "rule_id",
+        "rule_text",
+        "processing_type",
+        "logic_type",
+        "categories",
+        "field",
+        "values",
+        "exclude_logic",
+    ])
+    return df

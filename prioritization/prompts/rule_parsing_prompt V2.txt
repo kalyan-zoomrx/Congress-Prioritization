@@ -15,25 +15,21 @@ INPUTS:
 2. CLIENT_KEYWORDS
 - A structured collection of keywords provided by the client.
 - These are the qualifiable keywords used to populate "values" in the JSON.
-- Keywords may belong to categories such as indications, drugs, companies, mechanisms, etc or may be without any category.
+- Keywords may belong to categories such as indications, drugs, companies, mechanisms, etc.
 
 3. USER_INSTRUCTIONS (optional)
 - Follow any additional instructions provided by the user.
-- If any new vocabulary, User will define here in USER_INSTRUCTIONS. 
-
-Priority Levels:
-- Hierarchy: Very High > High > Internal > Medium > Low > Not Relevant
 
 KEY CONCEPTS:
 
-Processing Type Definitions:
+processing_type definitions:
 - keyword_filtering: direct keyword or phrase matching only.
 - context_filtering: requires semantic understanding or uses non-client keywords (e.g., patient reported outcomes, clinical results).
 - hybrid_filtering: requires both keyword matching and contextual understanding.
 - none: cannot be meaningfully automated.
 
 Categories, Field, and Values:
-- categories: topic(s) discussed in the rule if no category is specified, it will be "client_keywords".
+- categories: topic(s) discussed in the rule.
 - field: default is "keywords" unless the rule explicitly specifies another field.
 - values: keywords taken strictly from CLIENT_KEYWORDS or clearly derived from the rule.
 
@@ -44,114 +40,75 @@ Logical Operators:
 Exclusions:
 - Exclusions remove items even if include conditions are met.
 - Use exclude_logic structured the same as include_logic.
-- If no exclusions exist, set exclude_logic to "".
+- If no exclusions exist, set exclude_logic to null.
 
 Rule Splitting:
-- OR conditions between DISTINCT rule intents must be split into separate rules.
-- OR across categories within the SAME intent must remain in a single rule using one any_of block.
-
-Category Combination Rule:
-- If a rule’s intent is to match ANY keyword across multiple categories, ALL such categories MUST be combined into a SINGLE any_of condition.
-- Do NOT create separate any_of blocks for each category unless the rule text explicitly distinguishes them.
-- Do NOT create multiple rules at the same priority level if they differ only by category.
-- Prefer a single consolidated rule per priority level unless different logical operators (AND vs OR) are required.
-
-Example:
-If relevance is defined as:
-"Any session mentioning competitor OR genotype OR tumor type keywords"
-
-CORRECT:
-any_of: [
-  {{
-    categories: ["Competitors", "Genotype", "Tumor Type"],
-    field: "keywords",
-    values: [...]
-  }}
-]
-
-INCORRECT:
-any_of: [
-  {{ categories: ["Competitors"], ... }},
-  {{ categories: ["Genotype"], ... }},
-  {{ categories: ["Tumor Type"], ... }}
-]
-
-OUTPUT_SCHEMA:
-
-{{
-  "relevance": {{
-    "rules": [
-      {{
-        "rule_id": "relevance_rule_1",
-        "rule_text": "Full text or clear summary of the relevance rule based on client keywords or specific relevance statement.",
-        "processing_type": "keyword_filtering",
-        "reasoning": "{{REASONING BY LLM}}",
-        "include_logic": {{
-          "any_of": [
-            {{
-              "categories": ["client_keywords"],
-              "field": "keywords",
-              "values": ["Keyword1", "Keyword2", "Keyword3"]
-            }}
-          ]
-        }},
-        "exclude_logic": ""
-      }}
-    ]
-  }},
-  "priorities": {{
-    "Very High": {{
-      "rules": [
-        {{
-          "rule_id": "very_high_sub_rule_1",
-          "rule_text": "Full text or clear summary of the Very High priority rule.",
-          "processing_type": "keyword_filtering",
-          "reasoning": "{{REASONING BY LLM}}",
-          "include_logic": {{
-            "any_of": [
-              {{
-                "categories": ["category1", "category2"],
-                "field": "keywords",
-                "values": ["KeywordA", "KeywordB", "KeywordC"]
-              }}
-            ]
-          }},
-          "exclude_logic": ""
-        }},
-        {{
-          "rule_id": "very_high_sub_rule_2",
-          "rule_text": "Full text or clear summary of the Very High priority rule.",
-          "processing_type": "keyword_filtering",
-          "reasoning": "{{REASONING BY LLM}}",
-          "include_logic": {{
-            "any_of": [
-              {{
-                "categories": ["category1", "category2"],
-                "field": "keywords",
-                "values": ["KeywordA", "KeywordB", "KeywordC"]
-              }}
-            ]
-          }},
-          "exclude_logic": ""
-        }}
-      ]
-    }},
-    ........................
-  }}
-}}
-
-RULES:
-{rules}
-
-
-CLIENT KEYWORDS:
-{client_keywords}
-
-
-User Instructions: {user_instructions}
+- OR conditions must be split into separate rules.
+- AND conditions must be kept within a single rule using all_of.
 
 OUTPUT REQUIREMENTS:
 - Output must be a single valid JSON object.
 - No comments.
 - No trailing commas.
 - No text outside the JSON.
+
+OUTPUT_SCHEMA:
+
+{
+  "relevance": {
+    "rules": [
+      {
+        "rule_id": "relevance_rule_1",
+        "rule_text": "Full text or clear summary of the relevance rule based on client keywords or specific relevance statement.",
+        "processing_type": "keyword_filtering",
+        "include_logic": {
+          "any_of": [
+            {
+              "categories": ["client_keywords"],
+              "field": "keywords",
+              "values": ["Keyword1", "Keyword2", "Keyword3"]
+            }
+          ]
+        },
+        "exclude_logic": null
+      }
+    ]
+  },
+  "priorities": {
+    "Very High": {
+      "rules": [
+        {
+          "rule_id": "very_high_sub_rule_1",
+          "rule_text": "Full text or clear summary of the Very High priority rule.",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["category1", "category2"],
+                "field": "keywords",
+                "values": ["KeywordA", "KeywordB", "KeywordC"]
+              }
+            ]
+          },
+          "exclude_logic": null
+        },
+        {
+          "rule_id": "very_high_sub_rule_2",
+          "rule_text": "Full text or clear summary of the Very High priority rule.",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["category1", "category2"],
+                "field": "keywords",
+                "values": ["KeywordA", "KeywordB", "KeywordC"]
+              }
+            ]
+          },
+          "exclude_logic": null
+        }
+      ]
+    },
+    ........................
+  }
+}

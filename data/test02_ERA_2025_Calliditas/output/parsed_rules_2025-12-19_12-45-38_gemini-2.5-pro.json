@@ -1,0 +1,197 @@
+{
+  "relevance": {
+    "rules": [
+      {
+        "rule_id": "relevance_rule_1",
+        "rule_text": "All abstracts that coincides with disease area of interest (IgAN). This includes any of the provided client keywords.",
+        "processing_type": "keyword_filtering",
+        "include_logic": {
+          "any_of": [
+            {
+              "categories": [
+                "Clinical Trial",
+                "Company",
+                "Disease",
+                "Endpoints",
+                "Other",
+                "Treatment",
+                "Treatment Class"
+              ],
+              "field": "keywords",
+              "values": [
+                "PROTECT",
+                "ALIGN",
+                "ORIGIN 3",
+                "RUBY-3",
+                "NCT05799287",
+                "VISONARY",
+                "APPLAUSE",
+                "Novartis",
+                "Roche",
+                "Travere Therapeutics",
+                "Otsuka",
+                "Vera Therapeutics",
+                "Alpine Immune Sciences",
+                "Vertex Pharmaceuticals",
+                "Remegen",
+                "IgA Nephropathy",
+                "Proteinuria; OR UPCR",
+                "UACR",
+                "eGFR",
+                "KDIGO",
+                "Remission",
+                "Disease modification",
+                "IgA-IgG immune complexes",
+                "Subgroup",
+                "immunosuppression",
+                "non-immunosuppression",
+                "pathogenic Mechanisms",
+                "B cell depletion +/- B cell activation +/- B cell targeting",
+                "MEST-C",
+                "treatment options",
+                "Clinical Trial Endpoints",
+                "Biomarkers",
+                "Complement proteins +/- C3 Complement +/- C4 Complement",
+                "Standard of care",
+                "targeted-release formulation budesonide",
+                "Telitacicept",
+                "Sparsentan",
+                "Iptacopan",
+                "Atrasentan",
+                "Zigakibart",
+                "Povetacicept",
+                "Sibeprenlimab",
+                "Atacicept",
+                "Methylprednisone +/- methylprednisolone",
+                "BAFF +/- APRIL; OR APRIL alone; OR BAFF/April; OR Blys/April; OR APRIL/BLyS",
+                "AT1/EDNRA antagonist? +/- ERA +/- endothelian receptor antagonist",
+                "Complement Factor B inhibitor +/- alternative pathway +/- complement inhibition +/- complement system inhibitors",
+                "ENDR Antagonist",
+                "Systemic steroid +/- Systemic glucocorticoid +/- Systemic corticosteroid",
+                "SGLT2 +/- inhibition",
+                "optimized supportive care +/- ACE/ARB +/- RASi +/- RAASi",
+                "Gd-IgA OR IgA1 OR Gd-IgA1 OR Galactose deficient",
+                "Chinook Therapeutics",
+                "Immune Complex",
+                "budesonide",
+                "prednisone",
+                "TRF budesonide",
+                "Veloxis",
+                "Asahi Kasei",
+                "Tarpeyo",
+                "Kinpeygo"
+              ]
+            }
+          ]
+        },
+        "exclude_logic": ""
+      }
+    ]
+  },
+  "priorities": {
+    "Very High": {
+      "rules": [
+        {
+          "rule_id": "very_high_rule_1",
+          "rule_text": "Assigned by the Calliditas team",
+          "processing_type": "none",
+          "include_logic": "",
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "High": {
+      "rules": [
+        {
+          "rule_id": "high_rule_1",
+          "rule_text": "All relevant abstracts that include any of the following: Phase 2/3 data (including meta-analyses), real-world data (including patient reported outcomes, retrospective analyses and registry data)",
+          "processing_type": "context_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["Study Type", "Data Source"],
+                "field": "keywords",
+                "values": [
+                  "Phase 2",
+                  "Phase II",
+                  "Phase 3",
+                  "Phase III",
+                  "meta-analyses",
+                  "real-world data",
+                  "patient reported outcomes",
+                  "retrospective analyses",
+                  "registry data"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "Internal": {
+      "rules": [
+        {
+          "rule_id": "internal_rule_1",
+          "rule_text": "Calliditas sponsored studies",
+          "processing_type": "keyword_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["Company"],
+                "field": "keywords",
+                "values": ["Calliditas"]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "Medium": {
+      "rules": [
+        {
+          "rule_id": "medium_rule_1",
+          "rule_text": "All relevant abstracts that include any of the following: Phase 1 data, general HEOR studies, prognostic studies, preclinical studies, other general studies",
+          "processing_type": "context_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["Study Type", "Study Category"],
+                "field": "keywords",
+                "values": [
+                  "Phase 1",
+                  "Phase I",
+                  "HEOR",
+                  "health economics and outcomes research",
+                  "prognostic studies",
+                  "preclinical studies"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "Low": {
+      "rules": [
+        {
+          "rule_id": "low_rule_1",
+          "rule_text": "All relevant abstracts that only have mention of an indication of interest and does not include any other data",
+          "processing_type": "hybrid_filtering",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": ["Disease"],
+                "field": "keywords",
+                "values": ["IgA Nephropathy"]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    }
+  }
+}

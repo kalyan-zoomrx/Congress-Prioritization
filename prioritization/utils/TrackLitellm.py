@@ -14,7 +14,7 @@ def _get_current_spend_curl(base_url: str, api_key: str) -> float:
     url = f"{base_url.rstrip('/')}/key/info"
     cmd = [
         "curl",
-        "-s",  # silent
+        "-s",
         "-X", "GET",
         url,
         "-H", f"Authorization: Bearer {api_key}"
@@ -51,6 +51,7 @@ class SpendTracker:
         self.ended_at = datetime.now(IST)
         return {
             "spent": self.end_spend - self.start_spend,
+            "total_spent": self.end_spend,
             "started_at": self.started_at.isoformat(),
             "ended_at": self.ended_at.isoformat(),
             "duration_seconds": (self.ended_at - self.started_at).total_seconds()
