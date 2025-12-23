@@ -3,6 +3,7 @@ from typing import TypedDict, List, Dict, Any, Optional
 class PrioritizationState(TypedDict):
     directory: str
     model: str
+    user_instructions: Optional[str]
     rules_raw: Optional[str]
     keywords_raw: Optional[str]
     synonyms_raw: Optional[str]
