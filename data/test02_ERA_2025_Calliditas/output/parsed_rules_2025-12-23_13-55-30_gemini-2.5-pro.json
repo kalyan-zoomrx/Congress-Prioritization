@@ -1,0 +1,228 @@
+{
+  "relevance": {
+    "rules": [
+      {
+        "rule_id": "relevance_rule_1",
+        "rule_text": "All abstracts that coincides with disease area of interest (IgAN).",
+        "processing_type": "keyword_filtering",
+        "reasoning": "The rule defines relevance based on the mention of the disease area of interest, IgA Nephropathy. All provided client keywords fall under this disease area, so any match to any client keyword makes an abstract relevant.",
+        "include_logic": {
+          "any_of": [
+            {
+              "categories": [
+                "Clinical Trial",
+                "Company",
+                "Disease",
+                "Endpoints",
+                "Other",
+                "Treatment",
+                "Treatment Class"
+              ],
+              "field": "keywords",
+              "values": [
+                "PROTECT",
+                "ALIGN",
+                "ORIGIN 3",
+                "RUBY-3",
+                "NCT05799287",
+                "VISONARY",
+                "APPLAUSE",
+                "Novartis",
+                "Roche",
+                "Travere Therapeutics",
+                "Otsuka",
+                "Vera Therapeutics",
+                "Alpine Immune Sciences",
+                "Vertex Pharmaceuticals",
+                "Remegen",
+                "IgA Nephropathy",
+                "Proteinuria; OR UPCR",
+                "UACR",
+                "eGFR",
+                "KDIGO",
+                "Remission",
+                "Disease modification",
+                "IgA-IgG immune complexes",
+                "Subgroup",
+                "immunosuppression",
+                "non-immunosuppression",
+                "pathogenic Mechanisms",
+                "B cell depletion +/- B cell activation +/- B cell targeting",
+                "MEST-C",
+                "treatment options",
+                "Clinical Trial Endpoints",
+                "Biomarkers",
+                "Complement proteins +/- C3 Complement +/- C4 Complement",
+                "Standard of care",
+                "targeted-release formulation budesonide",
+                "Telitacicept",
+                "Sparsentan",
+                "Iptacopan",
+                "Atrasentan",
+                "Zigakibart",
+                "Povetacicept",
+                "Sibeprenlimab",
+                "Atacicept",
+                "Methylprednisone +/- methylprednisolone",
+                "BAFF +/- APRIL; OR APRIL alone; OR BAFF/April; OR Blys/April; OR APRIL/BLyS",
+                "AT1/EDNRA antagonist? +/- ERA +/- endothelian receptor antagonist",
+                "Complement Factor B inhibitor +/- alternative pathway +/- complement inhibition +/- complement system inhibitors",
+                "ENDR Antagonist",
+                "Systemic steroid +/- Systemic glucocorticoid +/- Systemic corticosteroid",
+                "SGLT2 +/- inhibition",
+                "optimized supportive care +/- ACE/ARB +/- RASi +/- RAASi",
+                "Gd-IgA OR IgA1 OR Gd-IgA1 OR Galactose deficient",
+                "Chinook Therapeutics",
+                "Immune Complex",
+                "budesonide",
+                "prednisone",
+                "TRF budesonide",
+                "Veloxis",
+                "Asahi Kasei",
+                "Tarpeyo",
+                "Kinpeygo"
+              ]
+            }
+          ]
+        },
+        "exclude_logic": ""
+      }
+    ]
+  },
+  "priorities": {
+    "Very High": {
+      "rules": [
+        {
+          "rule_id": "very_high_rule_1",
+          "rule_text": "Assigned by the Calliditas team",
+          "processing_type": "none",
+          "reasoning": "The rule states that priority is assigned manually by the client team, which cannot be automated through keyword or context filtering.",
+          "include_logic": "",
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "High": {
+      "rules": [
+        {
+          "rule_id": "high_rule_1",
+          "rule_text": "All relevant abstracts that include any of the following: Phase 2/3 data (including meta-analyses), real-world data (including patient reported outcomes, retrospective analyses and registry data)",
+          "processing_type": "context_filtering",
+          "reasoning": "This rule requires identifying specific study types and data presentations (Phase 2/3, RWD, PROs, etc.) which are concepts, not direct client keywords. This requires contextual understanding beyond simple keyword matching.",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": [
+                  "Study Type",
+                  "Data Type"
+                ],
+                "field": "keywords",
+                "values": [
+                  "Phase 2",
+                  "Phase 3",
+                  "Phase II",
+                  "Phase III",
+                  "meta-analyses",
+                  "meta-analysis",
+                  "real-world data",
+                  "real world data",
+                  "RWD",
+                  "RWE",
+                  "patient reported outcomes",
+                  "PRO",
+                  "retrospective analyses",
+                  "retrospective analysis",
+                  "registry data"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "Internal": {
+      "rules": [
+        {
+          "rule_id": "internal_rule_1",
+          "rule_text": "Calliditas sponsored studies",
+          "processing_type": "keyword_filtering",
+          "reasoning": "This rule prioritizes studies sponsored by Calliditas. This is identified by searching for the company name 'Calliditas' or its drug names 'Tarpeyo' and 'Kinpeygo'.",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": [
+                  "Company",
+                  "Treatment"
+                ],
+                "field": "keywords",
+                "values": [
+                  "Calliditas",
+                  "Tarpeyo",
+                  "Kinpeygo"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "Medium": {
+      "rules": [
+        {
+          "rule_id": "medium_rule_1",
+          "rule_text": "All relevant abstracts that include any of the following: Phase 1 data, general HEOR studies, prognostic studies, preclinical studies, other general studies",
+          "processing_type": "context_filtering",
+          "reasoning": "This rule requires identifying specific study types (Phase 1, HEOR, prognostic, preclinical) which are concepts, not direct client keywords. This requires contextual understanding.",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": [
+                  "Study Type",
+                  "Data Type"
+                ],
+                "field": "keywords",
+                "values": [
+                  "Phase 1",
+                  "Phase I",
+                  "HEOR",
+                  "health economics",
+                  "outcomes research",
+                  "prognostic",
+                  "preclinical",
+                  "pre-clinical"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    },
+    "Low": {
+      "rules": [
+        {
+          "rule_id": "low_rule_1",
+          "rule_text": "All relevant abstracts that only have mention of an indication of interest and does not meet criteria for a higher priority.",
+          "processing_type": "keyword_filtering",
+          "reasoning": "This rule acts as a catch-all for abstracts that are relevant (mention the indication) but do not meet the specific criteria for Medium, Internal, High, or Very High priority. It will be applied last in the priority hierarchy.",
+          "include_logic": {
+            "any_of": [
+              {
+                "categories": [
+                  "Disease"
+                ],
+                "field": "keywords",
+                "values": [
+                  "IgA Nephropathy"
+                ]
+              }
+            ]
+          },
+          "exclude_logic": ""
+        }
+      ]
+    }
+  }
+}
