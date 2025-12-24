@@ -1,6 +1,6 @@
 import litellm
 from dotenv import load_dotenv
-from configuration.config import LitellmConfig
+from prioritization.config.config import LitellmConfig
 from prioritization.utils.utils import get_prompt
 from prioritization.utils.logger import get_logger
 from typing import List, Optional
