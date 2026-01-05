@@ -1,7 +1,0 @@
-﻿Priority​,Rule
-RELEVANCE​,All abstracts that have Ardelyx provided keywords​
-INTERNAL​,Ardelyx sponsored abstracts​
-High​,"Phase 2 data, Phase 3 data (including meta-analyses), real-world data (including PROs and registry data), IBS-C, IBS (QOL, patient insights, new treatments), microbiota, and probiotics​"
-Medium​,"Phase 1 data, retrospective analyses, prognostic studies, trial designs, preclinical studies; studies with trial outcomes and endpoints; other general studies​"
-Low​,All abstracts that only have mention of an indication and does not include any other data​
-NOT RELEVANT​,"All abstracts that do not have Ardelyx provided keywords; Abstracts that exclude IBS, IBS-C, DGBI, SIBO, and CIC but include mentions of EOE (either alone or with IBD or steroids), colonoscopy, colorectal cancer, colon cancer, renal insufficiency, dysphagia, chronic liver disease, MASLD (only when associated with DGBI), esophagogastroduodenoscopy, IBD, endoscopy, and biopsies related to esophageal issues and dysphagia.​"

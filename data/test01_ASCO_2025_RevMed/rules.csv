@@ -1,5 +1,0 @@
-﻿Priority,Rule
-Relevance,Abstract with Client given keywords
-High,1. All abstracts with mentions of competitors\n2. Abstracts with tumor types in combination with client specified genotypes\n3. Abstracts mentioning K(RAS) mutant + tumor types.\n4. All abstracts with mentions of research keywords.\nExclude KRAS/RAS wild type abstracts
-Medium,1. All abstracts with mentions of genotypes\n2. Abstracts mentioning (K)RAS wild type + tumor type.
-Low,Abstracts with tumor types
