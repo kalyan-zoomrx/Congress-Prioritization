@@ -13,29 +13,68 @@ INPUTS:
   b. How to assign different priority levels to those sessions.
 
 2. CLIENT_KEYWORDS
-- A structured collection of keywords provided by the client.
+- A structured collection of keywords provided by the client (from client_keywords.csv).
+- The CSV contains the following columns:
+  - Keywords (Mandatory)
+  - Category
+  - Priority
 - These are the qualifiable keywords used to populate "values" in the JSON.
-- Keywords may belong to categories such as indications, drugs, companies, mechanisms, etc or may be without any category.
+- Keywords may belong to categories such as indications, drugs, companies, mechanisms, etc., or may be without any category.
 
 3. USER_INSTRUCTIONS (optional)
 - Follow any additional instructions provided by the user.
-- If any new vocabulary, User will define here in USER_INSTRUCTIONS. 
+- If any new vocabulary is used, the user will define it here in USER_INSTRUCTIONS.
 
 Priority Levels:
 - Hierarchy: Very High > High > Internal > Medium > Low > Not Relevant
 
+Global Priority & Relevance Application Rules:
+1. A session must first satisfy at least one relevance rule before any priority rule is applied.
+2. If multiple priority rules match a session, the highest priority level in the hierarchy applies.
+3. A session can match multiple rules, but only one final priority is assigned: the highest applicable priority.
+
 KEY CONCEPTS:
 
 Processing Type Definitions:
-- keyword_filtering: direct keyword or phrase matching only.
-- context_filtering: requires semantic understanding or uses non-client keywords (e.g., patient reported outcomes, clinical results).
-- hybrid_filtering: requires both keyword matching and contextual understanding.
+- keyword_filtering: direct keyword or phrase matching only, using CLIENT_KEYWORDS or clearly derivable fixed phrases.
+- context_filtering: requires semantic understanding, inference, or uses non-client concepts (e.g., clinical outcomes, patient-reported outcomes, study design patterns) where simple keyword matching is insufficient.
+- hybrid_filtering: requires both CLIENT_KEYWORDS and additional contextual or semantic conditions.
 - none: cannot be meaningfully automated.
 
-Categories, Field, and Values:
-- categories: topic(s) discussed in the rule if no category is specified, it will be "client_keywords".
-- field: default is "keywords" unless the rule explicitly specifies another field.
-- values: keywords taken strictly from CLIENT_KEYWORDS or clearly derived from the rule.
+Processing Type Decision Rules:
+- If the rule can be fully evaluated using only CLIENT_KEYWORDS and explicit phrases (no semantic inference required), use keyword_filtering.
+- If the rule cannot be evaluated using CLIENT_KEYWORDS alone and requires semantic understanding or non-keyword concepts, use context_filtering.
+- If the rule requires both: (a) matching CLIENT_KEYWORDS and (b) additional contextual or semantic conditions, use hybrid_filtering.
+- If it is unclear or the logic is inherently manual/ambiguous, use none.
+
+Entities and Values:
+- The previous "categories" and "field" concepts are replaced by: entities and values.
+- entities: describes the dimension being matched; must be a **string**, taking one of:
+  1. "Categories": used when the rule intent is expressed in terms of any item within one or more categories (e.g., "any competitor", "any tumor type", "any indication").
+  2. "Keywords": used when the rule intent is expressed in terms of specific words/phrases and not as "any item in category X".
+- values:
+  - If entities = "Categories":
+    - values must list category names referenced or clearly implied by the rule text (e.g., ["Competitors", "Genotype", "Tumor Type"]).
+    - These category names must correspond to the Category values present in CLIENT_KEYWORDS where applicable.
+  - If entities = "Keywords":
+    - values must list specific keywords taken strictly from CLIENT_KEYWORDS or clearly/explicitly derived from the RULES text.
+
+Additional Guidance for context_filtering and hybrid_filtering:
+- For rules with processing_type = "context_filtering", you MUST still populate entities and values; they must not be left empty.
+  - Use entities = "Keywords" (or the most appropriate option) and derive values from meaningful phrases in the rule text itself, even if those phrases are not present in CLIENT_KEYWORDS.
+  - Example phrases include study types or data types such as "Phase 2 data", "Phase 3 data", "meta-analyses", "real-world data", "patient-reported outcomes", "retrospective analyses", "registry data".
+- For rules with processing_type = "hybrid_filtering", populate values with:
+  - CLIENT_KEYWORDS-based terms for the keyword_filtering component, and
+  - Important non-client concepts from the rule text for the contextual component, as needed.
+- In all cases (keyword_filtering, context_filtering, hybrid_filtering), do not leave entities or values blank in include_logic; always derive them from CLIENT_KEYWORDS and/or clearly meaningful phrases in the RULES text.
+
+Entity Selection Rules:
+- If the rule intent is "any item across these categories" (e.g., competitors, genotypes, tumor types):
+  - entities: "Categories"
+  - values: [list of category names implied or stated by the rule].
+- If the rule intent is focused on specific named terms (e.g., "KRAS", "EGFR", a specific drug, a specific study name) and not phrased as "any X category":
+  - entities: "Keywords"
+  - values: [list of specific keywords].
 
 Logical Operators:
 - any_of: logical OR.
@@ -43,38 +82,82 @@ Logical Operators:
 
 Exclusions:
 - Exclusions remove items even if include conditions are met.
-- Use exclude_logic structured the same as include_logic.
-- If no exclusions exist, set exclude_logic to "".
+- Use exclude_logic structured the same way as include_logic.
+- If no exclusions exist, set exclude_logic to {{}} (an empty object), not an empty string.
 
 Rule Splitting:
 - OR conditions between DISTINCT rule intents must be split into separate rules.
-- OR across categories within the SAME intent must remain in a single rule using one any_of block.
+- OR across entities/categories within the SAME intent must remain in a single rule using one any_of block.
 
-Category Combination Rule:
-- If a rule’s intent is to match ANY keyword across multiple categories, ALL such categories MUST be combined into a SINGLE any_of condition.
+Category Combination Rule (using entities/values):
+- If a rule’s intent is to match ANY keyword across multiple categories, ALL such categories MUST be combined into a SINGLE any_of condition using:
+  - entities: "Categories"
+  - values: [list of category names].
 - Do NOT create separate any_of blocks for each category unless the rule text explicitly distinguishes them.
 - Do NOT create multiple rules at the same priority level if they differ only by category.
 - Prefer a single consolidated rule per priority level unless different logical operators (AND vs OR) are required.
 
-Example:
-If relevance is defined as:
+Reasoning Field Requirements:
+- The reasoning field summarizes why a specific rule, entities, values, and processing_type were chosen.
+- Reasoning must be concise, factual, and non-speculative, with a maximum of 2 sentences.
+
+Rule ID Naming Convention:
+- rule_id values must be unique across the entire JSON.
+- Use snake_case naming.
+- Relevance rules: prefix with "relevance_rule_" followed by a numeric index (e.g., "relevance_rule_1").
+- Priority rules: prefix with the lowercase priority name followed by "_sub_rule_" and a numeric index (e.g., "very_high_sub_rule_1", "high_sub_rule_2").
+
+Examples:
+
+1 Category-intent rule (relevance):  
+If relevance is defined as:  
 "Any session mentioning competitor OR genotype OR tumor type keywords"
 
-CORRECT:
-any_of: [
-  {{
-    categories: ["Competitors", "Genotype", "Tumor Type"],
-    field: "keywords",
-    values: [...]
-  }}
-]
+CORRECT include_logic:
+"include_logic": {{
+  "any_of": [
+    {{
+      "entities": "Categories",
+      "values": ["Competitors", "Genotype", "Tumor Type"]
+    }}
+  ]
+}}
 
-INCORRECT:
-any_of: [
-  {{ categories: ["Competitors"], ... }},
-  {{ categories: ["Genotype"], ... }},
-  {{ categories: ["Tumor Type"], ... }}
-]
+2 Keyword-intent rule (relevance):  
+If a rule is defined as:  
+"Any session mentioning the keywords KRAS, EGFR or ALK"
+
+CORRECT include_logic:
+"include_logic": {{
+  "any_of": [
+    {{
+      "entities": "Keywords",
+      "values": ["KRAS", "EGFR", "ALK"]
+    }}
+  ]
+}}
+
+3) Context-intent rule (priority, context_filtering):  
+If a rule is defined as:  
+"All relevant abstracts that include any of the following: Phase 2/3 data (including meta-analyses), real-world data (including patient reported outcomes, retrospective analyses and registry data)."
+
+CORRECT include_logic:
+"include_logic": {{
+  "any_of": [
+    {{
+      "entities": "Keywords",
+      "values": [
+        "Phase 2 data",
+        "Phase 3 data",
+        "meta-analyses",
+        "real-world data",
+        "patient-reported outcomes",
+        "retrospective analyses",
+        "registry data"
+      ]
+    }}
+  ]
+}}
 
 OUTPUT_SCHEMA:
 
@@ -85,17 +168,16 @@ OUTPUT_SCHEMA:
         "rule_id": "relevance_rule_1",
         "rule_text": "Full text or clear summary of the relevance rule based on client keywords or specific relevance statement.",
         "processing_type": "keyword_filtering",
-        "reasoning": "{{REASONING BY LLM}}",
+        "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
         "include_logic": {{
           "any_of": [
             {{
-              "categories": ["client_keywords"],
-              "field": "keywords",
+              "entities": "Keywords",
               "values": ["Keyword1", "Keyword2", "Keyword3"]
             }}
           ]
         }},
-        "exclude_logic": ""
+        "exclude_logic": {{}}
       }}
     ]
   }},
@@ -106,47 +188,57 @@ OUTPUT_SCHEMA:
           "rule_id": "very_high_sub_rule_1",
           "rule_text": "Full text or clear summary of the Very High priority rule.",
           "processing_type": "keyword_filtering",
-          "reasoning": "{{REASONING BY LLM}}",
+          "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
           "include_logic": {{
             "any_of": [
               {{
-                "categories": ["category1", "category2"],
-                "field": "keywords",
-                "values": ["KeywordA", "KeywordB", "KeywordC"]
+                "entities": "Categories",
+                "values": ["CategoryA", "CategoryB", "CategoryC"]
               }}
             ]
           }},
-          "exclude_logic": ""
+          "exclude_logic": {{}}
         }},
         {{
           "rule_id": "very_high_sub_rule_2",
           "rule_text": "Full text or clear summary of the Very High priority rule.",
           "processing_type": "keyword_filtering",
-          "reasoning": "{{REASONING BY LLM}}",
+          "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
           "include_logic": {{
             "any_of": [
               {{
-                "categories": ["category1", "category2"],
-                "field": "keywords",
+                "entities": "Keywords",
                 "values": ["KeywordA", "KeywordB", "KeywordC"]
               }}
             ]
           }},
-          "exclude_logic": ""
+          "exclude_logic": {{}}
         }}
       ]
     }},
-    ........................
+    "High": {{
+      "rules": []
+    }},
+    "Internal": {{
+      "rules": []
+    }},
+    "Medium": {{
+      "rules": []
+    }},
+    "Low": {{
+      "rules": []
+    }},
+    "Not Relevant": {{
+      "rules": []
+    }}
   }}
 }}
 
 RULES:
 {rules}
 
-
 CLIENT KEYWORDS:
 {client_keywords}
-
 
 User Instructions: {user_instructions}
 

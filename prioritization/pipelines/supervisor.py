@@ -19,13 +19,9 @@ def analysis_pipeline(directory, model):
     current_input = initial_input
 
     while True:
-        # Run/Continue pipeline
         result = pipeline.invoke(current_input, config=config)
-        
-        # Check current state for interruptions
         state_snapshot = pipeline.get_state(config)
         
-        # If no more nodes to run, we are finished
         if not state_snapshot.next:
             print("\n✅ Refinement Complete!")
             if result.get("report_path"):
@@ -39,8 +35,7 @@ def analysis_pipeline(directory, model):
                 print(f"\n❌ AI Analysis Error: {report['error']}")
                 break
                 
-            print("\n" + "="*60)
-            print("AI ANALYSIS REPORT READY")
+            print("\Rule Analysis Report")
             print("="*60)
             
             print(f"\n📋 Issues Found: {len(report.get('issues', []))}")
@@ -57,16 +52,12 @@ def analysis_pipeline(directory, model):
         print("\n" + "-"*60)
         print("Decision Options:")
         print(" [a] Approve - Save report and finish")
-        print(" [e] Edit    - Provide feedback/edits and re-analyze")
+        print(" [e] Edit    - Provide path to manually edited rules.csv and re-analyze")
         print(" [r] Reject  - Provide reason and re-analyze")
-        print(" [q] Quit    - Exit refinement session")
+        print(" [q] Quit    - Save current report and exit refinement session")
         
         choice = input("\nSelect an option [a/e/r/q]: ").lower().strip()
 
-        if choice == 'q':
-            print("Exiting refinement session...")
-            break
-            
         # Build decision command
         if choice == 'a':
             decision = {"decisions": [{"type": "approve"}]}
@@ -74,16 +65,20 @@ def analysis_pipeline(directory, model):
             feedback = input("Why is this rejected? Feedback for LLM: ")
             decision = {"decisions": [{"type": "reject", "message": feedback}]}
         elif choice == 'e':
-            feedback = input("Enter your edits or feedback for improvement: ")
+            file_path = input("Enter the full path to the manually edited rules.csv: ").strip()
+            # Remove quotes if the user copied path as "path"
+            file_path = file_path.replace('"', '').replace("'", "")
             decision = {
                 "decisions": [{
                     "type": "edit",
                     "edited_action": {
                         "name": "analyze_rules",
-                        "args": {"edited_rules": feedback}
+                        "args": {"edited_rules_path": file_path}
                     }
                 }]
             }
+        elif choice == 'q':
+            decision = {"decisions": [{"type": "quit"}]}
         else:
             print("Invalid choice. Please try again.")
             current_input = None # Stay in current state
@@ -101,14 +96,11 @@ def parsing_pipeline(directory, model):
     # Heavy Imports & Initializations
     # -----------------------------------------------------------------------------------
     logger.info("Importing Heavy Dependencies")
-    from prioritization.utils.TrackLitellm import SpendTracker
     from prioritization.components.rule_parsing import rule_parsing_workflow
     logger.info("Heavy Dependencies Imported Successfully")
     
     logger.info("Initializing Supervisor Pipeline")
     pipeline = rule_parsing_workflow()
-    tracker = SpendTracker()
-    tracker.initiate()
     logger.info("Supervisor Pipeline Initialized Successfully")
 
     # Supervisor Workflow
@@ -131,7 +123,3 @@ def parsing_pipeline(directory, model):
     
     except Exception as e:
         logger.error(f"Critical error during prioritization workflow: {str(e)}", exc_info=True)
-    
-    finally:
-        metrics = tracker.close()
-        logger.info(f"Session metrics - Amount Spent: {metrics['spent']} | Total Spend: {metrics['total_spent']}")

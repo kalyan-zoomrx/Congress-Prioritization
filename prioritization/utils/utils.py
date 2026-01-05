@@ -13,7 +13,7 @@ logger = get_logger("Utils")
 @lru_cache(maxsize=128)
 def get_prompt(prompt_name: str):
     try:
-        with open(f"prioritization/prompts/{prompt_name}.txt", "r") as f:
+        with open(f"prioritization/prompts/{prompt_name}.txt", "r", encoding="utf-8") as f:
             prompt = f.read()
             logger.info(f"Prompt: {prompt_name} read successfully")
             return prompt

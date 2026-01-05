@@ -79,6 +79,7 @@ class RuleAnalysisNodes:
         except Exception as e:
 
             state["analysis_report"] = {"error": str(e)}
+            logger.info(content)
             logger.error(f"Analysis failed: {e}")
 
         state["iteration_count"] = state.get("iteration_count", 0) + 1
@@ -98,17 +99,18 @@ class RuleAnalysisNodes:
                 {
                     "name": "analyze_rules",
                     "arguments": {"report": state["analysis_report"]},
-                    "description": "Rule analysis results pending review\\n\\nAnalysis Report Ready"
+                    "description": "Rule analysis results pending review\n\nAnalysis Report Ready"
                 }
             ],
             "review_configs": [
                 {
                     "action_name": "analyze_rules",
-                    "allowed_decisions": ["approve", "edit", "reject"]
+                    "allowed_decisions": ["approve", "edit", "reject", "quit"]
                 }
             ]
         }
         
+        # This will pause the execution and wait for a command resume
         response = interrupt(interrupt_payload)
         
         decisions = response.get("decisions", [])
@@ -119,9 +121,24 @@ class RuleAnalysisNodes:
             if decision["type"] == "reject":
                 state["user_feedback"] = decision.get("message", "")
             elif decision["type"] == "edit":
+                # User provided a path to manually edited rules
                 edited_action = decision.get("edited_action", {})
-                state["user_feedback"] = edited_action.get("args", {}).get("edited_rules", "")
-        
+                file_path = edited_action.get("args", {}).get("edited_rules_path")
+                
+                if file_path and os.path.exists(file_path):
+                    try:
+                        with open(file_path, "r", encoding="utf-8") as f:
+                            state["rules_raw"] = f.read()
+                        state["user_feedback"] = f"User manually edited rules file: {file_path}"
+                        logger.info(f"Loaded manually edited rules from {file_path}")
+                    except Exception as e:
+                        logger.error(f"Failed to read edited rules file: {e}")
+                        state["user_feedback"] = f"Error reading edited rules file: {str(e)}"
+                else:
+                    feedback = edited_action.get("args", {}).get("edited_rules", "")
+                    state["user_feedback"] = feedback
+                    logger.warning("No valid file path provided for 'edit', using feedback text instead.")
+
         return state
 
     # --------------------------------------------------------------------------------------
@@ -242,9 +259,11 @@ def rule_analysis_workflow():
         if decision == "approve":
             return "save_report"
         elif decision == "edit":
-            return "save_report"
+            return "analyze"  # Re-analyze with edited rules
         elif decision == "reject":
             return "analyze"  # Loop back for re-analysis
+        elif decision == "quit":
+            return "save_report" # Save report before quiting
         return "save_report"
     
     workflow.add_conditional_edges("human_review", decision_router, {
