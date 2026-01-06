@@ -7,16 +7,17 @@ from prioritization.utils.state import PrioritizationState
 from prioritization.components.rule_analysis import RuleAnalysisNodes
 from prioritization.components.rule_parsing import RuleParsingNodes
 
-logger = get_logger("UnifiedPrioritizationPipeline")
+logger = get_logger("")
 
-def unified_prioritization_workflow():
+def pipeline_graph():
     """
-    Creates a unified LangGraph workflow that combines:
+    A LangGraph pipeline for rule prioritization is a state graph that combines:
+
     1. Rule Analysis (with Human-in-the-Loop)
     2. Rule Parsing (from optimized or original rules)
     """
     
-    logger.info("Creating Unified Prioritization Pipeline")
+    logger.info("Initializing Pipeline Graph")
     
     analysis_nodes = RuleAnalysisNodes()
     parsing_nodes = RuleParsingNodes()
@@ -37,8 +38,6 @@ def unified_prioritization_workflow():
     workflow.add_node("parsing_save_output", parsing_nodes.save_output)
     
     # --- DEFINE EDGES & ROUTING ---
-    
-    # Entry to Analysis
     workflow.add_edge(START, "analysis_load_data")
     workflow.add_edge("analysis_load_data", "analysis_analyze")
     workflow.add_edge("analysis_analyze", "analysis_human_review")
@@ -46,6 +45,7 @@ def unified_prioritization_workflow():
     # Analysis Decision Router
     def analysis_decision_router(state: PrioritizationState) -> str:
         if state.get("step_status") == "failed":
+            logger.error("🛑 Phase failure detected in Analysis. Terminating.")
             return END
             
         decision = state.get("review_decision")
@@ -78,6 +78,7 @@ def unified_prioritization_workflow():
     # After Analysis report is saved, we move to Parsing (unless it was a "quit" decision)
     def after_analysis_router(state: PrioritizationState) -> str:
         if state.get("review_decision") == "quit":
+            logger.info("👋 User requested termination. Skipping parsing.")
             return END
         return "parsing_parse"
         
@@ -91,9 +92,11 @@ def unified_prioritization_workflow():
     
     def parsing_router(state: PrioritizationState) -> str:
         if state.get("step_status") == "failed":
+            logger.error("🛑 Phase failure detected in Parsing.")
             return END
         # Internal rule_parsing loop for validation errors (limited iterations)
         if state.get("validation_errors") and state.get("iteration_count", 0) < 3:
+            logger.info(f"🔄 Validation failed. Retrying parsing (Attempt {state.get('iteration_count', 0) + 1}/3)")
             return "parsing_parse"
         return "parsing_save_output"
         
@@ -105,7 +108,5 @@ def unified_prioritization_workflow():
     
     workflow.add_edge("parsing_save_output", END)
     
-    logger.info("Unified Pipeline Created Successfully")
-    
-    # Compile with checkpointer enabled for HITL analysis interrupts
+    logger.info("✨ Pipeline graph successfully compiled and ready for execution.")
     return workflow.compile(checkpointer=MemorySaver())

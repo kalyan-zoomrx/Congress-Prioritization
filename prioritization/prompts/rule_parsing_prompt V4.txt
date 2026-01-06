@@ -49,48 +49,32 @@ Processing Type Decision Rules:
 
 Entities and Values:
 - The previous "categories" and "field" concepts are replaced by: entities and values.
-- entities: describes the dimension being matched; must be a string, taking one of the following values:
-  1. "categories": used when the rule intent is expressed in terms of any item within one or more categories (e.g., "any competitor", "any tumor type", "any indication").
-  2. "keywords": used when the rule intent is expressed in terms of specific words/phrases and not as "any item in category X".
-  3. "contextual-keywords": used for contextual or semantic concepts that are not CLIENT_KEYWORDS, typically used in context_filtering or hybrid_filtering (e.g., "Phase 2 data", "real-world data", "patient-reported outcomes", "registry data").
+- entities: describes the dimension being matched; must be a **string**, taking one of:
+  1. "Categories": used when the rule intent is expressed in terms of any item within one or more categories (e.g., "any competitor", "any tumor type", "any indication").
+  2. "Keywords": used when the rule intent is expressed in terms of specific words/phrases and not as "any item in category X".
 - values:
-  - If entities = "categories":
+  - If entities = "Categories":
     - values must list category names referenced or clearly implied by the rule text (e.g., ["Competitors", "Genotype", "Tumor Type"]).
     - These category names must correspond to the Category values present in CLIENT_KEYWORDS where applicable.
-  - If entities = "keywords":
-    - values must list specific keywords taken strictly from CLIENT_KEYWORDS or clearly/explicitly derived from the RULES text as specific named terms (e.g., specific drugs, indications, companies, biomarkers).
-  - If entities = "contextual-keywords":
-    - values must list non-client, contextual phrases which capture data types, study designs, outcomes, settings, or similar semantic concepts from the RULES text.
+  - If entities = "Keywords":
+    - values must list specific keywords taken strictly from CLIENT_KEYWORDS or clearly/explicitly derived from the RULES text.
 
 Additional Guidance for context_filtering and hybrid_filtering:
 - For rules with processing_type = "context_filtering", you MUST still populate entities and values; they must not be left empty.
-  - Use entities = "contextual-keywords" when the rule is driven by semantic or contextual concepts (e.g., study phase, data type, outcome type).
-  - Derive values from meaningful phrases in the rule text itself, even if those phrases are not present in CLIENT_KEYWORDS.
-  - Example phrases include: "Phase 2 data", "Phase 3 data", "meta-analyses", "real-world data", "patient-reported outcomes", "retrospective analyses", "registry data".
-- For rules with processing_type = "hybrid_filtering":
-  - Separate keyword and contextual components into different any_of/all_of blocks as appropriate:
-    - Use entities = "keywords" (and/or "categories") for the CLIENT_KEYWORDS-based part (e.g., drugs, indications, competitors).
-    - Use entities = "contextual-keywords" for the additional contextual or semantic conditions (e.g., "Phase 3 data", "real-world data").
-  - Example:
-    - Rule text: "Phase 2 data, Phase 3 data (including meta-analyses), real-world data (including PROs and registry data), Phosphate binders/phosphate lowering treatment."
-    - Here:
-      - keywords filtering keywords are: "Phosphate binders/phosphate lowering treatment"
-      - contextual keywords are: "Phase 2 data", "Phase 3 data (including meta-analyses)", "real-world data (including PROs and registry data)"
-    - The include_logic might contain:
-      - One block with entities = "keywords" and values = ["Phosphate binders/phosphate lowering treatment"]
-      - One block with entities = "contextual-keywords" and values = ["Phase 2 data", "Phase 3 data (including meta-analyses)", "real-world data (including PROs and registry data)"]
+  - Use entities = "Keywords" (or the most appropriate option) and derive values from meaningful phrases in the rule text itself, even if those phrases are not present in CLIENT_KEYWORDS.
+  - Example phrases include study types or data types such as "Phase 2 data", "Phase 3 data", "meta-analyses", "real-world data", "patient-reported outcomes", "retrospective analyses", "registry data".
+- For rules with processing_type = "hybrid_filtering", populate values with:
+  - CLIENT_KEYWORDS-based terms for the keyword_filtering component, and
+  - Important non-client concepts from the rule text for the contextual component, as needed.
 - In all cases (keyword_filtering, context_filtering, hybrid_filtering), do not leave entities or values blank in include_logic; always derive them from CLIENT_KEYWORDS and/or clearly meaningful phrases in the RULES text.
 
 Entity Selection Rules:
 - If the rule intent is "any item across these categories" (e.g., competitors, genotypes, tumor types):
-  - entities: "categories"
+  - entities: "Categories"
   - values: [list of category names implied or stated by the rule].
 - If the rule intent is focused on specific named terms (e.g., "KRAS", "EGFR", a specific drug, a specific study name) and not phrased as "any X category":
-  - entities: "keywords"
+  - entities: "Keywords"
   - values: [list of specific keywords].
-- If the rule intent is focused on data type, study design, or other semantic/contextual conditions rather than specific client-defined terms:
-  - entities: "contextual-keywords"
-  - values: [list of contextual phrases from the rule text].
 
 Logical Operators:
 - any_of: logical OR.
@@ -107,7 +91,7 @@ Rule Splitting:
 
 Category Combination Rule (using entities/values):
 - If a rule’s intent is to match ANY keyword across multiple categories, ALL such categories MUST be combined into a SINGLE any_of condition using:
-  - entities: "categories"
+  - entities: "Categories"
   - values: [list of category names].
 - Do NOT create separate any_of blocks for each category unless the rule text explicitly distinguishes them.
 - Do NOT create multiple rules at the same priority level if they differ only by category.
@@ -125,7 +109,7 @@ Rule ID Naming Convention:
 
 Examples:
 
-1) Category-intent rule (relevance):  
+1 Category-intent rule (relevance):  
 If relevance is defined as:  
 "Any session mentioning competitor OR genotype OR tumor type keywords"
 
@@ -133,13 +117,13 @@ CORRECT include_logic:
 "include_logic": {{
   "any_of": [
     {{
-      "entities": "categories",
+      "entities": "Categories",
       "values": ["Competitors", "Genotype", "Tumor Type"]
     }}
   ]
 }}
 
-2) Keyword-intent rule (relevance):  
+2 Keyword-intent rule (relevance):  
 If a rule is defined as:  
 "Any session mentioning the keywords KRAS, EGFR or ALK"
 
@@ -147,7 +131,7 @@ CORRECT include_logic:
 "include_logic": {{
   "any_of": [
     {{
-      "entities": "keywords",
+      "entities": "Keywords",
       "values": ["KRAS", "EGFR", "ALK"]
     }}
   ]
@@ -161,7 +145,7 @@ CORRECT include_logic:
 "include_logic": {{
   "any_of": [
     {{
-      "entities": "contextual-keywords",
+      "entities": "Keywords",
       "values": [
         "Phase 2 data",
         "Phase 3 data",
@@ -170,38 +154,6 @@ CORRECT include_logic:
         "patient-reported outcomes",
         "retrospective analyses",
         "registry data"
-      ]
-    }}
-  ]
-}}
-
-4) Hybrid-intent rule (priority, hybrid_filtering) combining keywords and contextual-keywords:  
-If a rule is defined as:  
-"Phase 2 data, Phase 3 data (including meta-analyses), real-world data (including PROs and registry data), Phosphate binders/phosphate lowering treatment."
-
-CORRECT include_logic (one possible structure):
-"include_logic": {{
-  "all_of": [
-    {{
-      "any_of": [
-        {{
-          "entities": "keywords",
-          "values": [
-            "Phosphate binders/phosphate lowering treatment"
-          ]
-        }}
-      ]
-    }},
-    {{
-      "any_of": [
-        {{
-          "entities": "contextual-keywords",
-          "values": [
-            "Phase 2 data",
-            "Phase 3 data (including meta-analyses)",
-            "real-world data (including PROs and registry data)"
-          ]
-        }}
       ]
     }}
   ]
@@ -216,11 +168,11 @@ OUTPUT_SCHEMA:
         "rule_id": "relevance_rule_1",
         "rule_text": "Full text or clear summary of the relevance rule based on client keywords or specific relevance statement.",
         "processing_type": "keyword_filtering",
-        "reasoning": "{{{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}}}",
+        "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
         "include_logic": {{
           "any_of": [
             {{
-              "entities": "keywords",
+              "entities": "Keywords",
               "values": ["Keyword1", "Keyword2", "Keyword3"]
             }}
           ]
@@ -236,11 +188,11 @@ OUTPUT_SCHEMA:
           "rule_id": "very_high_sub_rule_1",
           "rule_text": "Full text or clear summary of the Very High priority rule.",
           "processing_type": "keyword_filtering",
-          "reasoning": "{{{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}}}",
+          "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
           "include_logic": {{
             "any_of": [
               {{
-                "entities": "categories",
+                "entities": "Categories",
                 "values": ["CategoryA", "CategoryB", "CategoryC"]
               }}
             ]
@@ -251,11 +203,11 @@ OUTPUT_SCHEMA:
           "rule_id": "very_high_sub_rule_2",
           "rule_text": "Full text or clear summary of the Very High priority rule.",
           "processing_type": "keyword_filtering",
-          "reasoning": "{{{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}}}",
+          "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
           "include_logic": {{
             "any_of": [
               {{
-                "entities": "keywords",
+                "entities": "Keywords",
                 "values": ["KeywordA", "KeywordB", "KeywordC"]
               }}
             ]
