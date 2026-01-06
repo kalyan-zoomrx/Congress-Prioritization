@@ -1,19 +1,23 @@
-from prioritization.pipelines.supervisor import parsing_pipeline, analysis_pipeline
-from prioritization.utils.TrackLitellm import SpendTracker
 from prioritization.utils.logger import get_logger
-
 logger = get_logger(__name__)
+logger.info("Starting Unified Congress Prioritization Pipeline")
 
-TEST_DIRECTORY = "data/test01_ASCO_2025_RevMed/"
-#MODEL = "gpt-4.1"
-#MODEL = "gemini/gemini-2.5-pro"
-MODEL = "claude-haiku-4-5"
+from prioritization.pipelines.supervisor import run_prioritization_pipeline
+from prioritization.utils.TrackLitellm import SpendTracker
 
-if __name__ == "__main__":
-    logger.info("Starting Congress Prioritization Pipeline")
-    tracker = SpendTracker()
-    tracker.initiate()
-    analysis_pipeline(directory=TEST_DIRECTORY, model=MODEL)
-    #parsing_pipeline(directory=TEST_DIRECTORY, model=MODEL)
-    metrics = tracker.close()
-    logger.info(f"Session metrics - Amount Spent: {metrics['spent']} | Total Spend: {metrics['total_spent']}")
+TEST_DIRECTORY = "data/test03_NKF_2025_Ardelyx/"
+MODEL = "gemini/gemini-2.5-pro"
+
+tracker = SpendTracker()
+tracker.initiate()
+    
+# Run the Unified Pipeline (Analysis -> HITL -> Parsing)
+result = run_prioritization_pipeline(directory=TEST_DIRECTORY, model=MODEL)
+    
+if result:
+    logger.info("Pipeline execution finished successfully.")
+else:
+    logger.warning("Pipeline execution did not complete.")
+
+metrics = tracker.close()
+logger.info(f"Session metrics - Amount Spent: {metrics['spent']} | Total Spend: {metrics['total_spent']}")

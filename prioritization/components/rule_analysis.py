@@ -4,58 +4,90 @@ import pandas as pd
 from datetime import datetime
 from typing import Dict, Any, Optional
 from langgraph.types import interrupt
-from langgraph.graph import StateGraph, END
+from langgraph.graph import StateGraph, START, END
 from langgraph.checkpoint.memory import MemorySaver
 
 from prioritization.utils.logger import get_logger
-from prioritization.utils.state import RuleAnalysisState
+from prioritization.utils.state import PrioritizationState
 from prioritization.utils.litellm import call_llm_with_user_prompt
+
 
 logger = get_logger("RuleAnalysisNodes")
 
 
 class RuleAnalysisNodes:
-    def __init__(self):
-        pass
 
-    # --------------------------------------------------------------------------------------
-    # Load Data (Rules.csv (Mandatory), client_keywords.csv (Optional))
-    # --------------------------------------------------------------------------------------
+    # --------------------------------------------------------------------------------------------------
+    # Load Data (Rules.csv (Mandatory), client_keywords.csv (Optional), custom_synonyms.csv (Optional))
+    # --------------------------------------------------------------------------------------------------
 
-    def load_data(self, state: RuleAnalysisState) -> RuleAnalysisState:
+    def load_data(self, state: PrioritizationState) -> PrioritizationState:
         """Loads data specifically for analysis."""
 
-        logger.info("Loading Data for Rule Analysis")
-        directory = state["directory"]
-        
-        with open(os.path.join(directory, "rules.csv"), "r", encoding="utf-8") as f:
-            state["rules_raw"] = f.read()
-        
-        if os.path.exists(os.path.join(directory, "client_keywords.csv")):
-            with open(os.path.join(directory, "client_keywords.csv"), "r", encoding="utf-8") as f:
-                state["keywords_raw"] = f.read()
-                logger.info("Rules & Client Keywords loaded successfully")
-        else:
-            logger.info("Rules loaded successfully, Client Keywords not found")
-            
-        return state
+        state["current_step"] = "rule_analysis - loading_data"
+        state["step_status"] = "pending"
 
+        logger.info("Loading Data for Rule Analysis")
+        directory = state.get("directory")
+        if not directory:
+            state.update({"step_status": "failed", "step_error": "state missing required key: directory"})
+            return state
+        
+        def read_file(filename: str, required: bool = False) -> str | None:
+            path = os.path.join(directory, filename)
+
+            if not os.path.exists(path):
+                if required:
+                    state.update({"step_status": "failed", "step_error": f"required `rules.csv` file not found: {path}"})
+                    raise FileNotFoundError(f"required `rules.csv` file not found: {path}")
+                logger.info("%s not found (optional)", filename)
+                return None
+
+            with open(path, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+
+            if required and not content:
+                state.update({"step_status": "failed", "step_error": f"required `rules.csv` file is empty: {path}"})
+                raise ValueError(f"required `rules.csv` file is empty: {path}")
+
+            logger.info("%s loaded successfully", filename)
+            return content
+
+        try:
+            state["rules_raw"] = read_file("rules.csv", required=True)
+            state["keywords_raw"] = read_file("client_keywords.csv", required=False)
+            state["synonyms_raw"] = read_file("custom_synonyms.csv", required=False)
+            logger.info("Data loaded successfully")
+            state.update({"step_status": "success"})
+
+        except (FileNotFoundError, ValueError, OSError) as e:
+            logger.error("Failed to load data: %s", e)
+            state.update({"step_status": "failed", "step_error": str(e)})
+
+        finally:
+            return state
 
     # --------------------------------------------------------------------------------------
     # Analyze Rules (Issues & Optimizations)
     # --------------------------------------------------------------------------------------
 
-    def analyze_rules(self, state: RuleAnalysisState) -> RuleAnalysisState:
+    def analyze_rules(self, state: PrioritizationState) -> PrioritizationState:
         """Calls LLM via litellm.completion to find issues and optimizations."""
 
-        logger.info("Analyzing Rules")
+        if state.get("step_status") == "failed":
+            logger.warning("Skipping analysis due to previous failure.")
+            return state
         
+        logger.info("Analyzing Rules")
+        state.update({"current_step": "rule_analysis - analyzing_rules", "step_status": "pending"})
+        
+        content = ""
         try:
             response = call_llm_with_user_prompt(
                 prompt_name="rule_analysis_prompt",
                 format_params={
                     "rules": state["rules_raw"],
-                    "client_keywords": state["keywords_raw"],
+                    "client_keywords": state.get("keywords_raw", ""),
                     "user_feedback": state.get("user_feedback", "")
                 },
                 model_name=state["model"],
@@ -70,92 +102,163 @@ class RuleAnalysisNodes:
             
             if state.get("user_feedback"):
                 state["review_history"].append({
-                    "iteration": state.get("iteration_count", 0),
+                    "iteration": state.get("analysis_iteration_count", 0),
                     "feedback": state["user_feedback"]
                 })
                 
             logger.info("Analysis complete.")
+            state["step_status"] = "success"
 
         except Exception as e:
-
             state["analysis_report"] = {"error": str(e)}
             logger.info(content)
             logger.error(f"Analysis failed: {e}")
+            state.update({
+                "step_status": "failed",
+                "step_error": str(e)
+            })
+        
+        finally:
+            state["analysis_iteration_count"] = state.get("analysis_iteration_count", 0) + 1
+            return state
 
-        state["iteration_count"] = state.get("iteration_count", 0) + 1
-        return state
+        
 
     # --------------------------------------------------------------------------------------
     # Human Gatekeeper (Review & Feedback)
     # --------------------------------------------------------------------------------------
 
-    def human_gatekeeper(self, state: RuleAnalysisState) -> RuleAnalysisState:
+    def human_gatekeeper(self, state: PrioritizationState) -> PrioritizationState:
         """Interrupts the flow for user review using LangGraph interrupt()."""
 
-        logger.info("Human Review Node - Interrupting for review...")
+        if state.get("step_status") == "failed":
+            return state
         
-        interrupt_payload = {
-            "action_requests": [
-                {
-                    "name": "analyze_rules",
-                    "arguments": {"report": state["analysis_report"]},
-                    "description": "Rule analysis results pending review\n\nAnalysis Report Ready"
-                }
-            ],
-            "review_configs": [
-                {
-                    "action_name": "analyze_rules",
-                    "allowed_decisions": ["approve", "edit", "reject", "quit"]
-                }
-            ]
-        }
-        
-        # This will pause the execution and wait for a command resume
-        response = interrupt(interrupt_payload)
-        
-        decisions = response.get("decisions", [])
-        if decisions:
-            decision = decisions[0]
-            state["review_decision"] = decision.get("type")
+        try:
+            logger.info("Human Review Node - Interrupting for review...")
             
-            if decision["type"] == "reject":
-                state["user_feedback"] = decision.get("message", "")
-            elif decision["type"] == "edit":
-                # User provided a path to manually edited rules
-                edited_action = decision.get("edited_action", {})
-                file_path = edited_action.get("args", {}).get("edited_rules_path")
+            interrupt_payload = {
+                "action_requests": [
+                    {
+                        "name": "analyze_rules",
+                        "arguments": {"report": state["analysis_report"]},
+                        "description": "Rule analysis results pending review\n\nAnalysis Report Ready"
+                    }
+                ],
+                "review_configs": [
+                    {
+                        "action_name": "analyze_rules",
+                        "allowed_decisions": ["approve", "edit", "reject", "quit", "skip"]
+                    }
+                ]
+            }
+            
+            response = interrupt(interrupt_payload)
+            
+            decisions = response.get("decisions", [])
+            if decisions:
+                decision = decisions[0]
+                state["review_decision"] = decision.get("type")
                 
-                if file_path and os.path.exists(file_path):
-                    try:
-                        with open(file_path, "r", encoding="utf-8") as f:
-                            state["rules_raw"] = f.read()
-                        state["user_feedback"] = f"User manually edited rules file: {file_path}"
-                        logger.info(f"Loaded manually edited rules from {file_path}")
-                    except Exception as e:
-                        logger.error(f"Failed to read edited rules file: {e}")
-                        state["user_feedback"] = f"Error reading edited rules file: {str(e)}"
-                else:
-                    feedback = edited_action.get("args", {}).get("edited_rules", "")
-                    state["user_feedback"] = feedback
-                    logger.warning("No valid file path provided for 'edit', using feedback text instead.")
+                if decision["type"] == "reject":
+                    state["user_feedback"] = decision.get("message", "")
 
+                elif decision["type"] == "edit":
+                    edited_action = decision.get("edited_action", {})
+                    file_path = edited_action.get("args", {}).get("edited_rules_path")
+                    
+                    if file_path and os.path.exists(file_path):
+                        try:
+                            with open(file_path, "r", encoding="utf-8") as f:
+                                state["rules_raw"] = f.read()
+                            state["user_feedback"] = f"User manually edited rules file: {file_path}"
+                            logger.info(f"Loaded manually edited rules from {file_path}")
+                        except Exception as e:
+                            logger.error(f"Failed to read edited rules file: {e}")
+                            state["user_feedback"] = f"Error reading edited rules file: {str(e)}"
+                    else:
+                        feedback = edited_action.get("args", {}).get("edited_rules", "")
+                        state["user_feedback"] = feedback
+                        logger.warning("No valid file path provided for 'edit', using feedback text instead.")
+
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception as e:
+            # Check if it's a LangGraph Interrupt (which should be allowed to propagate)
+            if "Interrupt" in type(e).__name__:
+                raise e
+            logger.error(f"Human gatekeeper failed: {e}")
+            state["step_status"] = "failed"
+            state["step_error"] = str(e)
+        
+        return state
+
+    # --------------------------------------------------------------------------------------
+    # Apply Optimizations (If Approved)
+    # --------------------------------------------------------------------------------------
+
+    def apply_optimizations(self, state: PrioritizationState) -> PrioritizationState:
+        """Applies suggested optimizations from the report to rules_raw if approved."""
+        if state.get("step_status") == "failed" or state.get("review_decision") != "approve":
+            return state
+
+        logger.info("Applying AI Optimizations to rules_raw")
+        report = state.get("analysis_report", {})
+        optimizations = report.get("optimizations", [])
+        
+        rules_content = state.get("rules_raw", "")
+        
+        if optimizations:
+            applied_count = 0
+            # Sort optimizations by original text length descending to avoid partial matches
+            sorted_opts = sorted(optimizations, key=lambda x: len(x.get("original_text", "")), reverse=True)
+            
+            for opt in sorted_opts:
+                original = opt.get("original_text", "").strip()
+                suggested = opt.get("suggested_text", "").strip()
+                
+                if original and suggested and original in rules_content:
+                    rules_content = rules_content.replace(original, suggested)
+                    applied_count += 1
+            
+            logger.info(f"Applied {applied_count} optimizations.")
+        else:
+            logger.info("No optimizations to apply.")
+        
+        state["transformed_rules"] = rules_content
+        return state
+
+    # --------------------------------------------------------------------------------------
+    # Skip Optimizations (Carry forward original rules)
+    # --------------------------------------------------------------------------------------
+
+    def skip_optimizations(self, state: PrioritizationState) -> PrioritizationState:
+        """Carries forward raw rules as transformed rules when analysis is skipped."""
+        logger.info("Skipping optimizations - using raw rules as transformed rules")
+        state["transformed_rules"] = state.get("rules_raw", "")
         return state
 
     # --------------------------------------------------------------------------------------
     # Save to CSV
     # --------------------------------------------------------------------------------------
 
-    def save_to_excel(self, state: RuleAnalysisState) -> RuleAnalysisState:
+    def save_to_excel(self, state: PrioritizationState) -> PrioritizationState:
         """Saves the analysis report to an Excel file with separate sheets for optimizations and issues."""
 
+        if state.get("step_status") == "failed":
+            return state
+        
         logger.info("Saving analysis report")
+        state.update({
+            "current_sub_step": "Saving Analysis Report"
+        })
         
         try:
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             report_dir = os.path.join(state["directory"], "analysis_reports")
             os.makedirs(report_dir, exist_ok=True)
             
-            report_path = os.path.join(report_dir, f"rule_analysis_{timestamp}.xlsx")
+            report_path = os.path.join(report_dir, f"rule_analysis_{timestamp}_{state['model'].split('/')[-1]}.xlsx")
             
             analysis_report = state["analysis_report"]
             
@@ -222,57 +325,12 @@ class RuleAnalysisNodes:
             
             state["report_path"] = report_path
             logger.info(f"Report saved to: {report_path}")
+            state["step_status"] = "success"
             
         except Exception as e:
             logger.error(f"Failed to save report: {e}")
-            state["report_path"] = f"Error: {str(e)}"
+            state["step_status"] = "error"
+            state["step_error"] = str(e)
         
-        return state
-
-
-# ------------------------------------------------------------------------------------------
-# Pipeline Creation
-# ------------------------------------------------------------------------------------------
-
-def rule_analysis_workflow():
-    """Creates the LangGraph workflow with HITL using pure LiteLLM."""
-    
-    logger.info("Creating Refinement Pipeline")
-    nodes = RuleAnalysisNodes()
-    
-    workflow = StateGraph(RuleAnalysisState)
-    
-    # Add nodes
-    workflow.add_node("load_data", nodes.load_data)
-    workflow.add_node("analyze", nodes.analyze_rules)
-    workflow.add_node("human_review", nodes.human_gatekeeper)
-    workflow.add_node("save_report", nodes.save_to_excel)
-    
-    # Define edges
-    workflow.set_entry_point("load_data")
-    workflow.add_edge("load_data", "analyze")
-    workflow.add_edge("analyze", "human_review")
-    
-    # Conditional routing based on decision
-    def decision_router(state: RuleAnalysisState) -> str:
-        decision = state.get("review_decision")
-        if decision == "approve":
-            return "save_report"
-        elif decision == "edit":
-            return "analyze"  # Re-analyze with edited rules
-        elif decision == "reject":
-            return "analyze"  # Loop back for re-analysis
-        elif decision == "quit":
-            return "save_report" # Save report before quiting
-        return "save_report"
-    
-    workflow.add_conditional_edges("human_review", decision_router, {
-        "analyze": "analyze",
-        "save_report": "save_report"
-    })
-    
-    workflow.add_edge("save_report", END)
-    logger.info("Refinement Pipeline Created")
-    
-    # Compile with checkpointer
-    return workflow.compile(checkpointer=MemorySaver())
+        finally:
+            return state
