@@ -38,9 +38,11 @@ def run_prioritization_pipeline(directory, model):
             logger.info("Prioritization Pipeline Completed Successfully")
 
             if result.get("output_file"):
+                print("Parsed Rules are saved at: ", result['output_file'])
                 logger.info(f"Final Parsed Rules Saved: {result['output_file']}")
             
             if result.get("report_path"):
+                print("Analysis Report is saved at: ", result['report_path'])
                 logger.info(f"Final Analysis Report: {result['report_path']}")
             
             return result

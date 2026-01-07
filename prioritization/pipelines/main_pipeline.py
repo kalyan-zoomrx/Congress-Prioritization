@@ -7,7 +7,7 @@ from prioritization.utils.state import PrioritizationState
 from prioritization.components.rule_analysis import RuleAnalysisNodes
 from prioritization.components.rule_parsing import RuleParsingNodes
 
-logger = get_logger("")
+logger = get_logger("main_pipeline")
 
 def pipeline_graph():
     """
