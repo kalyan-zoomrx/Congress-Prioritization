@@ -10,6 +10,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from prioritization.utils.logger import get_logger
 from prioritization.utils.state import PrioritizationState
 from prioritization.utils.litellm import call_llm_with_user_prompt
+from prioritization.utils.file_utils import validate_csv_content
 
 
 logger = get_logger("RuleAnalysisNodes")
@@ -62,6 +63,34 @@ class RuleAnalysisNodes:
 
         except (FileNotFoundError, ValueError, OSError) as e:
             logger.error("Failed to load data: %s", e)
+            state.update({"step_status": "failed", "step_error": str(e)})
+
+        finally:
+            return state
+
+    # --------------------------------------------------------------------------------------
+    # Validate Input Data
+    # --------------------------------------------------------------------------------------
+
+    def validate_input(self, state: PrioritizationState) -> PrioritizationState:
+        """
+        Validating Input Data: 'rules.csv', 'client_keywords.csv', 'custom_synonyms.csv'
+        """
+        
+        state["current_step"] = "rule_analysis - validate_input"
+        state["step_status"] = "pending"
+
+        logger.info("Validating Input Data")
+
+        try:
+            validate_csv_content(state["rules_raw"], "rules")
+            validate_csv_content(state["keywords_raw"], "client_keywords")
+            validate_csv_content(state["synonyms_raw"], "custom_synonyms")
+            logger.info("Input Data validated successfully")
+            state.update({"step_status": "success"})
+
+        except Exception as e:
+            logger.error("%s", e)
             state.update({"step_status": "failed", "step_error": str(e)})
 
         finally:

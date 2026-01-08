@@ -98,7 +98,7 @@ Additional Guidance for context_filtering and hybrid_filtering:
   - Derive values from meaningful phrases in the rule text itself, even if those phrases are not present in CLIENT_KEYWORDS.
   - Example phrases include: "Phase 2 data", "Phase 3 data", "meta-analyses", "real-world data", "patient-reported outcomes", "retrospective analyses", "registry data", "first-line setting".
 - For rules with processing_type = "hybrid_filtering":
-  - Separate keyword, category, column, and contextual components into different any_of/all_of blocks as appropriate:
+  - Combine keyword, category, column, and contextual components into a single flat any_of or all_of block (no nested any_of/all_of):
     - Use entities = "keywords" and/or "categories" for the CLIENT_KEYWORDS-based part (e.g., specific drugs, indications, firms, diseases).
     - Use entities = "columns" for structural conditions involving dataset columns (e.g., "late_breaking_abstract = 1", "classification = oral", "ONLY_firms_populated_other_entity_columns_empty").
     - Use entities = "contextual-keywords" for additional contextual or semantic conditions (e.g., "Phase 3 data", "real-world data").
@@ -132,6 +132,28 @@ Entity Selection Rules:
 Logical Operators:
 - any_of: logical OR.
 - all_of: logical AND.
+
+STRUCTURE CONSTRAINTS FOR LOGIC (FLAT STRUCTURE REQUIREMENT):
+- For each rule (both relevance and priority), include_logic MUST use exactly one top-level logical operator: either "all_of" OR "any_of", but not both.
+- include_logic MUST NOT contain nested "all_of" or "any_of" blocks inside other "all_of"/"any_of" blocks.
+  - Allowed patterns:
+    - "include_logic": {{
+      "all_of": [
+        {{ "entities": "keywords", "values": ["GSK"] }},
+        {{ "entities": "columns", "values": ["indications"] }}
+      ]
+    }}
+    - or:
+    - "include_logic": {{
+      "any_of": [
+        {{ "entities": "categories", "values": ["Competitors", "Genotype", "Tumor Type"] }}
+      ]
+    }}
+  - NOT allowed:
+    - "include_logic": {{ "all_of": [ {{ "any_of": [ ... ] }}, ... ] }}
+    - "include_logic": {{ "any_of": [ {{ "all_of": [ ... ] }}, ... ] }}
+- Each item inside the "all_of" or "any_of" array is a single condition object that contains only "entities" and "values" (no further logical nesting).
+- exclude_logic, if present, MUST follow the same rule: exactly one top-level "all_of" OR "any_of" and no nested logical blocks.
 
 Exclusions:
 - Exclusions remove items even if include conditions are met.
@@ -275,7 +297,7 @@ OUTPUT_SCHEMA:
         "rule_id": "relevance_rule_1",
         "rule_text": "Full text or clear summary of the relevance rule based on client keywords or specific relevance statement.",
         "processing_type": "keyword_filtering",
-        "reasoning": "{{{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}}}",
+        "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
         "include_logic": {{
           "any_of": [
             {{
@@ -295,7 +317,7 @@ OUTPUT_SCHEMA:
           "rule_id": "very_high_sub_rule_1",
           "rule_text": "Full text or clear summary of the Very High priority rule.",
           "processing_type": "keyword_filtering",
-          "reasoning": "{{{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}}}",
+          "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
           "include_logic": {{
             "any_of": [
               {{
@@ -310,7 +332,7 @@ OUTPUT_SCHEMA:
           "rule_id": "very_high_sub_rule_2",
           "rule_text": "Full text or clear summary of the Very High priority rule.",
           "processing_type": "keyword_filtering",
-          "reasoning": "{{{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}}}",
+          "reasoning": "{{REASONING BY LLM, MAX 2 SENTENCES, CONCISE AND FACTUAL}}",
           "include_logic": {{
             "any_of": [
               {{

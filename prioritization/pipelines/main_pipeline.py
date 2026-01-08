@@ -26,6 +26,7 @@ def pipeline_graph():
     
     # --- ANALYSIS NODES ---
     workflow.add_node("analysis_load_data", analysis_nodes.load_data)
+    workflow.add_node("analysis_validate_input", analysis_nodes.validate_input)
     workflow.add_node("analysis_analyze", analysis_nodes.analyze_rules)
     workflow.add_node("analysis_human_review", analysis_nodes.human_gatekeeper)
     workflow.add_node("analysis_apply_optimizations", analysis_nodes.apply_optimizations)
@@ -39,7 +40,8 @@ def pipeline_graph():
     
     # --- DEFINE EDGES & ROUTING ---
     workflow.add_edge(START, "analysis_load_data")
-    workflow.add_edge("analysis_load_data", "analysis_analyze")
+    workflow.add_edge("analysis_load_data", "analysis_validate_input")
+    workflow.add_edge("analysis_validate_input", "analysis_analyze")
     workflow.add_edge("analysis_analyze", "analysis_human_review")
     
     # Analysis Decision Router

@@ -35,8 +35,6 @@ def run_prioritization_pipeline(directory, model):
         state_snapshot = pipeline.get_state(config)
         
         if not state_snapshot.next:
-            logger.info("Prioritization Pipeline Completed Successfully")
-
             if result.get("output_file"):
                 print("Parsed Rules are saved at: ", result['output_file'])
                 logger.info(f"Final Parsed Rules Saved: {result['output_file']}")
