@@ -1,7 +1,7 @@
 from prioritization.utils.logger import get_logger
 logger = get_logger(__name__)
 
-TEST_DIRECTORY = "data/sample/"
+TEST_DIRECTORY = "data/test08_ESMO_2025_JNJ_ST3/"
 MODEL = "gemini/gemini-2.5-pro"
 
 logger.info(f"🚀 Initializing Congress Prioritization Workflow | Source: {TEST_DIRECTORY} | Model: {MODEL}")

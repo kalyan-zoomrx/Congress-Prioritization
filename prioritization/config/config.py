@@ -7,17 +7,26 @@ class LitellmConfig:
     DEFAULT_MODEL: str = "gpt-4.1"
     OUTPUT_FOLDER: str = "output"
 
+
 class ValidationConfig:
     MANDATORY_CSV_HEADERS: Dict[str, List[str]] = {
-        "client_keywords": ["keyword", "label", "category"],
-        "rules": ["Priority", "Rule"],
-        "custom_synonyms": ["id", "term", "root", "synonym"]
+        "client_keywords": ["keyword"],
+        "rules": ["priority", "rule"],
+        "custom_synonyms": ["id", "term", "root", "synonym"],
     }
+
+    OPTIONAL_CSV_HEADERS: Dict[str, List[str]] = {
+        "client_keywords": ["label", "category", "priority"],
+        "rules": [],
+        "custom_synonyms": [],
+    }
+
     ALLOWED_PRIORITIES: List[str] = [
+        "Relevance",
         "Very High",
         "High",
         "Internal",
         "Medium",
         "Low",
-        "Not Relevant"
+        "Not Relevant",
     ]
