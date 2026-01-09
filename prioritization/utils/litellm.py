@@ -1,11 +1,13 @@
+import os
+import time
 import litellm
 from dotenv import load_dotenv
+from pydantic import BaseModel
+from typing import List, Optional, Type, Union
+
 from prioritization.config.config import LitellmConfig
 from prioritization.utils.utils import get_prompt
 from prioritization.utils.logger import get_logger
-from typing import List, Optional
-import os
-import time
 
 load_dotenv()
 litellm.drop_params = True
@@ -18,25 +20,97 @@ PROVIDER_MODELS = {
     "gemini": ["gemini/gemini-2.5-pro"]
 }
 
-PROVIDER_JSON_KWARGS = {
-    "openai": lambda: {"response_format": {"type": "json_object"}},
-
-    "anthropic": lambda: {"betas": ["structured-outputs-2025-11-13"], "output_format": {"type": "json"}},
-
-    "gemini": lambda: {"response_mime_type": "application/json"}
-}
-
 def _get_provider_from_model(model_name: str) -> str:
     for provider, models in PROVIDER_MODELS.items():
         if model_name in models:
             return provider
     return "unknown"
 
+def _build_kwargs(provider: str, json_output: bool, json_schema: Optional[Union[Type[BaseModel], dict]] = None) -> dict:
+    """
+    Build provider-specific kwargs for structured / JSON output.
+    Supports:
+      - OpenAI: response_format (json_schema/json_object)
+      - Anthropic: betas + output_format (json_schema/json)
+      - Gemini: response_mime_type + response_json_schema
+    """
+
+    if not json_output:
+        logger.info("Proceeding without JSON/structured output")
+        return {}
+
+    # Normalize Schema: Pydantic Model/Dict -> Dict
+    schema_dict: Optional[dict] = None
+    if json_schema is not None:
+        if isinstance(json_schema, type) and issubclass(json_schema, BaseModel):
+            schema_dict = json_schema.model_json_schema()
+        elif isinstance(json_schema, dict):
+            schema_dict = json_schema
+        else:
+            raise TypeError("json_schema must be either a Pydantic BaseModel subclass or a dict")
+
+    if provider == "openai":
+        if schema_dict is not None:
+            logger.info("Proceeding with OpenAI JSON output schema")
+            return {
+                "response_format": {
+                    "type": "json_schema",
+                    "json_schema": {
+                        "strict": True,
+                        "schema": schema_dict
+                    }
+                }
+            }
+        else:
+            logger.info("Proceeding with OpenAI JSON output without schema")
+            return {
+                "response_format": {
+                    "type": "json_object"
+                }
+            }
+
+    if provider == "anthropic":
+        if schema_dict is not None:
+            logger.info("Proceeding with Anthropic JSON output schema")
+            return {
+                "betas": ["structured-outputs-2025-11-13"],
+                "output_format": {
+                    "type": "json_schema",
+                    "schema": schema_dict,
+                },
+            }
+        else:
+            logger.info("Proceeding with Anthropic JSON output without schema")
+            return {
+                "betas": ["structured-outputs-2025-11-13"],
+                "output_format": {
+                    "type": "json"
+                },
+            }
+
+    if provider == "gemini":
+        if schema_dict is not None:
+            logger.info("Proceeding with Gemini JSON output schema")
+            return {
+                "response_mime_type": "application/json",
+                "response_json_schema": schema_dict
+            }
+        else:
+            logger.info("Proceeding with Gemini JSON output without schema")
+            return {
+                "response_mime_type": "application/json"
+            }
+    
+    else:
+        logger.warning(f"Provider {provider} not supported for JSON schema; proceeding without schema kwargs")
+        return {}
+
 def call_llm_with_tracing(
     messages: List[dict],
     model_name: Optional[str] = None,
     stream: bool = False,
-    json_output: Optional[bool] = False,
+    json_output: bool = False,
+    json_schema: Optional[Union[Type[BaseModel], dict]] = None,
     **kwargs
 ):
 
@@ -49,14 +123,14 @@ def call_llm_with_tracing(
     provider = _get_provider_from_model(model_name)
     logger.info(f"Identified Provider: {provider}")
 
-    if json_output:
-        if provider in PROVIDER_JSON_KWARGS:
-            kwargs.update(PROVIDER_JSON_KWARGS[provider]())
-            logger.info(f"JSON Schema enabled for {provider}: {PROVIDER_JSON_KWARGS[provider]()}")
-        else:
-            logger.warning(f"Provider is not supported for JSON Schema: {provider}")
-    else:
-        logger.info(f"JSON Schema not enabled")
+    provider_json_kwargs = _build_kwargs(
+        provider=provider,
+        json_output=json_output,
+        json_schema=json_schema,
+    )
+
+    final_kwargs = {**provider_json_kwargs, **kwargs}
+    logger.info("Json Format Args: %s", final_kwargs)
     
     try:
         start_time = time.time()
@@ -67,7 +141,7 @@ def call_llm_with_tracing(
             messages=messages,
             stream=stream,
             temperature=0.0,
-            **kwargs
+            **final_kwargs
         )
         end_time = time.time()
         logger.info(f"LLM call took {end_time - start_time:.2f} seconds")
@@ -86,7 +160,8 @@ def call_llm_with_user_prompt(
     format_params: Optional[dict] = None,
     model_name: Optional[str] = None,
     stream: bool = False,
-    json_output: Optional[bool] = False,
+    json_output: bool = False,
+    json_schema: Optional[Union[Type[BaseModel], dict]] = None,
     **kwargs
 ):
     prompt = get_prompt(prompt_name)
@@ -103,6 +178,7 @@ def call_llm_with_user_prompt(
         model_name=model_name,
         stream=stream,
         json_output=json_output,
+        json_schema=json_schema,
         **kwargs
     )
 
@@ -113,7 +189,8 @@ def call_llm_with_system_prompt(
     format_params: Optional[dict] = None,
     model_name: Optional[str] = None,
     stream: bool = False,
-    json_output: Optional[bool] = False,
+    json_output: bool = False,
+    json_schema: Optional[Union[Type[BaseModel], dict]] = None,
     **kwargs
 ):
     system_message = get_prompt(system_prompt_name)
@@ -133,5 +210,6 @@ def call_llm_with_system_prompt(
         model_name=model_name,
         stream=stream,
         json_output=json_output,
+        json_schema=json_schema,
         **kwargs
     )

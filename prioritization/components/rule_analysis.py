@@ -11,6 +11,7 @@ from prioritization.utils.logger import get_logger
 from prioritization.utils.state import PrioritizationState
 from prioritization.utils.litellm import call_llm_with_user_prompt
 from prioritization.utils.file_utils import validate_csv_content
+from prioritization.schema.schema import RuleAnalysisOutputConfig
 
 
 logger = get_logger("RuleAnalysisNodes")
@@ -120,7 +121,8 @@ class RuleAnalysisNodes:
                     "user_feedback": state.get("user_feedback", "")
                 },
                 model_name=state["model"],
-                json_output=True
+                json_output=True,
+                json_schema=RuleAnalysisOutputConfig
             )
 
             content = response.content.replace("```json", "").replace("```", "").strip()

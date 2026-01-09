@@ -24,7 +24,7 @@ def pipeline_graph():
     
     workflow = StateGraph(PrioritizationState)
     
-    # --- ANALYSIS NODES ---
+    # Defining Rule Analysis Nodes
     workflow.add_node("analysis_load_data", analysis_nodes.load_data)
     workflow.add_node("analysis_validate_input", analysis_nodes.validate_input)
     workflow.add_node("analysis_analyze", analysis_nodes.analyze_rules)
@@ -33,16 +33,27 @@ def pipeline_graph():
     workflow.add_node("analysis_skip_optimizations", analysis_nodes.skip_optimizations)
     workflow.add_node("analysis_save_report", analysis_nodes.save_to_excel)
     
-    # --- PARSING NODES ---
+    # Defining Rule Parsing Nodes
     workflow.add_node("parsing_parse", parsing_nodes.parse_rules)
     workflow.add_node("parsing_validate", parsing_nodes.validate_rules)
     workflow.add_node("parsing_save_output", parsing_nodes.save_output)
     
-    # --- DEFINE EDGES & ROUTING ---
+    # Defining Edges & Routing
     workflow.add_edge(START, "analysis_load_data")
     workflow.add_edge("analysis_load_data", "analysis_validate_input")
     workflow.add_edge("analysis_validate_input", "analysis_analyze")
-    workflow.add_edge("analysis_analyze", "analysis_human_review")
+    
+    def analysis_retry_router(state: PrioritizationState) -> str:
+        if state.get("step_status") == "failed" and state.get("analysis_iteration_count", 0) < 3:
+            logger.info(f"🔄 Analysis failed. Retrying (Attempt {state.get('analysis_iteration_count', 0) + 1}/3)")
+            return "analysis_analyze"
+        return "analysis_human_review"
+
+    # Conditional Edges for routing
+    workflow.add_conditional_edges("analysis_analyze", analysis_retry_router, {
+        "analysis_analyze": "analysis_analyze",
+        "analysis_human_review": "analysis_human_review",
+    })
     
     # Analysis Decision Router
     def analysis_decision_router(state: PrioritizationState) -> str:
@@ -54,11 +65,11 @@ def pipeline_graph():
         if decision == "approve":
             return "analysis_apply_optimizations"
         elif decision == "edit":
-            return "analysis_load_data"  # Re-read rules.csv after manual edit
+            return "analysis_load_data"
         elif decision == "reject":
-            return "analysis_analyze"   # Re-run LLM analysis with feedback
+            return "analysis_analyze"
         elif decision == "quit":
-            return "analysis_save_report" # Save report then end
+            return "analysis_save_report"
         elif decision == "skip":
             return "analysis_skip_optimizations"
             

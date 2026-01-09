@@ -10,6 +10,7 @@ from prioritization.utils.logger import get_logger
 from prioritization.config.config import LitellmConfig
 from prioritization.utils.state import PrioritizationState
 from prioritization.utils.litellm import call_llm_with_user_prompt
+from prioritization.schema.schema import RuleParsingOutputConfig
 
 logger = get_logger("RuleParsingNodes")
 
@@ -101,7 +102,8 @@ class RuleParsingNodes:
                     "user_instructions": full_instructions
                 },
                 model_name=state["model"],
-                json_output=True
+                json_output=True,
+                json_schema = RuleParsingOutputConfig
             )
 
             content = response.content.replace("```json", "").replace("```", "").strip()
@@ -180,7 +182,6 @@ class RuleParsingNodes:
                 "output_file": output_path,
                 "step_status": "success"
             })
-            logger.info(f"Parsed Rules saved: {output_path}")
         except Exception as e:
             logger.error(f"Error saving output: {e}")
             state.update({"step_status": "failed", "step_error": str(e)})

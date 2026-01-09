@@ -1,7 +1,7 @@
 import csv
 import logging
 from typing import Tuple, List
-from prioritization.config.config import ValidationConfig
+from prioritization.config.constants import ValidationConfig
 
 logger = logging.getLogger(__name__)
 
