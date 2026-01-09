@@ -104,7 +104,7 @@ class RuleAnalysisOutputConfig(BaseModel):
 # ---------------------------------------------------------------------------------------------------------------
 
 ProcessingType = Literal["keyword_filtering", "context_filtering", "hybrid_filtering", "none"]
-EntityType = Literal["categories", "keywords", "contextual-keywords", "columns"]
+EntityType = Literal["concepts", "keywords", "contextual-keywords", "columns"]
 
 class Condition(BaseModel):
     entities: EntityType

@@ -11,3 +11,5 @@
 - - Handling Approach:
 - - Shall we add Column as a new feild in 'entities' key
 - - We can have those as a description in some key like 'reasoning'
+
+- renaming 'categories' in entities to 'concepts'
