@@ -6,7 +6,7 @@ from typing import List, Optional, Literal, Dict
 
 class ValidationConfig:
     MANDATORY_CSV_HEADERS: Dict[str, List[str]] = {
-        "client_keywords": ["keyword"],
+        "client_keywords": ["keywords"],
         "rules": ["priority", "rule"],
         "custom_synonyms": ["id", "term", "root", "synonym"],
     }
@@ -14,7 +14,7 @@ class ValidationConfig:
     OPTIONAL_CSV_HEADERS: Dict[str, List[str]] = {
         "client_keywords": ["label", "category", "priority"],
         "rules": [],
-        "custom_synonyms": [],
+        "custom_synonyms": ['category'],
     }
 
     ALLOWED_PRIORITIES: List[str] = [
